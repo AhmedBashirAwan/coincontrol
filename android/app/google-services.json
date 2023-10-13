@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "544626766506",
+    "project_id": "finalyearprojec-80025",
+    "storage_bucket": "finalyearprojec-80025.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544626766506:android:6f056c7997f7e71bb9d6d3",
+        "android_client_info": {
+          "package_name": "com.example.coincontrol"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM52Ts6Gnz0IJOMIQCV9nw-4MS_oHNH3M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544626766506:android:50b6f1182ac0c7fab9d6d3",
+        "android_client_info": {
+          "package_name": "com.example.financialassistance"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM52Ts6Gnz0IJOMIQCV9nw-4MS_oHNH3M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
