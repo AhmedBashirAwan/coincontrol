@@ -11,9 +11,9 @@ getWidth(BuildContext context) {
   return MediaQuery.of(context).size.width;
 }
 
-bool isDarkTheme() {
+bool isDarkTheme(BuildContext context) {
   final appBloc =
-      Provider.of<ApplicationBloc>(navigatorKey.currentContext!, listen: false);
+      Provider.of<ApplicationBloc>(context, listen: false);
   return appBloc.brightness == Brightness.dark;
 }
 

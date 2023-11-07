@@ -1,41 +1,28 @@
-import 'package:coincontrol/imports.dart';
-import 'package:coincontrol/src/auth/controllers/authcontroller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/style.dart';
 
 import '../../../constants.dart';
+import '../../../imports.dart';
 import '../../../theme/colors.dart';
 import '../components/buttons.dart';
 import '../components/textfields.dart';
 
-class ForgetPassword extends StatefulWidget {
-  const ForgetPassword({super.key});
+class Verification extends StatefulWidget {
+  const Verification({super.key});
 
   @override
-  State<ForgetPassword> createState() => _ForgetPasswordState();
+  State<Verification> createState() => _VerificationState();
 }
 
-class _ForgetPasswordState extends State<ForgetPassword> {
+class _VerificationState extends State<Verification> {
   final TextEditingController _email = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<ApplicationBloc>(context);
-    String? validateEmail(String? value) {
-      const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
-          r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
-          r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
-          r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
-          r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
-          r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
-          r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])';
-      final regex = RegExp(pattern);
-
-      return value!.isNotEmpty && !regex.hasMatch(value)
-          ? 'Enter a valid email address'
-          : null;
-    }
 
     return Scaffold(
       body: SafeArea(
@@ -49,7 +36,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             ),
             Row(
               children: const [
-                Text('Forget Password',
+                Text('Enter OTP Code',
                     style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.w500,
@@ -65,8 +52,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     child: RichText(
                         text: const TextSpan(children: <TextSpan>[
                       TextSpan(
-                          text:
-                              'Enter the Email you used to create the account, so we can send you the instructions to reset your password',
+                          text: 'Enter the 4 digit Code we send You',
                           style: TextStyle(
                               color: Colors.black54,
                               fontWeight: FontWeight.w400,
@@ -79,34 +65,25 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             SizedBox(
               height: getHeight(context) * 0.01,
             ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                  vertical: getHeight(context) * 0.01,
-                  horizontal: getWidth(context) * 0.01),
-              width: getWidth(context) * .2,
-              child: TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: validateEmail,
-                controller: _email,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.name,
-                decoration: InputDecoration(
-                  errorText: validateEmail(_email.text),
-                  errorStyle: TextStyle(color: Colors.red.shade400),
-                  labelText: 'Email',
-                  filled: true,
-                  fillColor: isDarkTheme(context) == true
-                      ? Colors.black87
-                      : Colors.grey.shade200,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    // borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
+            // Fields(
+            //   background: LIGHT_COLOR,
+            //   controller: _email,
+            //   radius: 18,
+            //   hint: 'Email',
+            // ),
+            OTPTextField(
+              length: 4,
+              width: MediaQuery.of(context).size.width,
+              fieldWidth: 50,
+              style: const TextStyle(fontSize: 17),
+              textFieldAlignment: MainAxisAlignment.spaceAround,
+              fieldStyle: FieldStyle.underline,
+              onCompleted: (pin) {
+                print("Completed: " + pin);
+              },
             ),
             SizedBox(
-              height: getWidth(context) * 0.03,
+              height: getWidth(context) * 0.05,
             ),
             SizedBox(
                 width: getWidth(context),
@@ -116,19 +93,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   foregroundColor: LIGHT_COLOR,
                   backgroundColor: LIGHT_SEC_COLOR,
                   child: const Text(
-                    'Send Email',
+                    'Continue',
                     style: TextStyle(fontSize: 18),
                   ),
-                  onPressed: () async {
-                    try {
-                      await FirebaseAuth.instance
-                          .sendPasswordResetEmail(email: _email.text.trim());
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('$e')),
-                      );
-                    }
-                  },
+                  onPressed: () {},
                 )),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),

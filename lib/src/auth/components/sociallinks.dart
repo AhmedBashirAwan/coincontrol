@@ -1,3 +1,4 @@
+import 'package:coincontrol/constants.dart';
 import 'package:flutter/material.dart';
 
 class Links extends StatefulWidget {
@@ -7,10 +8,13 @@ class Links extends StatefulWidget {
   final Icon? icon;
   final double? radius;
   final double? height;
-
-  Links({
+  final Widget? image;
+  final Function? onTap;
+  const Links({
     Key? key,
     this.height,
+    this.onTap,
+    this.image,
     this.icon,
     this.backgroundColor,
     this.radius,
@@ -29,29 +33,28 @@ class _LinksState extends State<Links> {
       height: widget.height,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        border: Border.all(
-            color: widget.foregroundColor ?? Colors.black38, width: 0.3),
+        // border: Border.all(
+        //     color: widget.foregroundColor ?? Colors.black38, width: 0.3),
         borderRadius: BorderRadius.circular(widget.radius ?? 0.0),
         color: widget.backgroundColor,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              widget.icon?.icon,
-              color: widget.foregroundColor,
+            Container(
+              child: widget.image,
             ),
-            const SizedBox(
-              // width: widget.text?40:0,
+            SizedBox(
+              width: getWidth(context) * .03,
             ),
             Text(
               widget.text ?? '',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: widget.foregroundColor,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF000000),
               ),
             ),
           ],

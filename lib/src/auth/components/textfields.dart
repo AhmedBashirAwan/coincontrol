@@ -7,10 +7,14 @@ class Fields extends StatefulWidget {
   Color? foreground;
   Color? background;
   TextEditingController? controller;
+  TextInputType? type;
+  Function? validater;
 
   Fields({
     Key? key,
     this.hint,
+    this.type,
+    this.validater,
     this.obscure,
     this.radius,
     this.foreground,
@@ -33,17 +37,24 @@ class _FieldsState extends State<Fields> {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: TextField(
+        child: TextFormField(
+          validator: (value) {
+            widget.validater;
+          },
           controller: widget.controller,
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          keyboardType: widget.type,
           obscureText: widget.obscure ?? false,
           decoration: InputDecoration(
-            hintStyle:
-                const TextStyle(fontSize: 18, fontWeight: FontWeight.w400,),
+            hintStyle: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+            ),
             hintText: widget.hint,
             border: InputBorder.none,
           ),
         ),
+      
       ),
     );
   }

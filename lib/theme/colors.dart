@@ -2,23 +2,35 @@
 
 import 'package:flutter/material.dart';
 
-Color CARD_COLOR = Colors.white;
-Color PAGE_BACK_COLOR = const Color(0xffD0D5DD);
-Color PRIMARY_COLOR = const Color(0xff0A4D82);
-Color DARK_COLOR = const Color(0xff100F1A);
-Color CARD_BLUE5_COLOR = const Color(0xff1570EF).withOpacity(0.05);
-Color CARD_BLUE10_COLOR = const Color(0xff1570EF).withOpacity(0.1);
-Color BUTTON_GREY_COLOR = const Color(0xff6670851a).withOpacity(0.1);
-Color RED_COLOR = const Color(0xffD92D20);
-Color TEXT_COLOR = const Color(0xff667085);
-Color NAV_INACTIVE_COLOR = const Color(0xff7d7d7d);
-Color BORDER_COLOR = const Color(0xFFD0D5DD);
-Color GREEN_COLOR = const Color(0xFF039754);
-Color ORANGE_COLOR = const Color(0xFFDC6803);
-Color LIGHT_COLOR = const Color(0xFFF8F8F8);
-Color LIGHT_BODY_COLOR = const Color(0xFFF6F6F6);
-Color DARK_BG_COLOR = const Color(0xFF131313);
-Color DARK_CARD_COLOR = const Color(0xFF333333);
+
+
+
+
+Color LIGHT_COLOR = Colors.white;
+Color LIGHT_SEC_COLOR = const Color(0xFFAF6B58);
+Color LIGHT_PRI_COLOR = const Color(0xFFEFE1DD);
+Color LIGHT_CARDS = const Color(0xFFCBBCB1);
+
+
+
+// Color Light_COLOR = Colors.white;
+// Color PAGE_BACKGROUND_COLOR = const Color(0xFFEFE1DD);
+// Color PAGE_BACK_COLOR = const Color(0xffD0D5DD);
+// Color PRIMARY_COLOR = const Color(0xff0A4D82);
+// Color DARK_COLOR = const Color(0xff100F1A);
+// Color CARD_BLUE5_COLOR = const Color(0xff1570EF).withOpacity(0.05);
+// Color CARD_BLUE10_COLOR = const Color(0xff1570EF).withOpacity(0.1);
+// Color BUTTON_GREY_COLOR = const Color(0xff6670851a).withOpacity(0.1);
+// Color RED_COLOR = const Color(0xffD92D20);
+// Color TEXT_COLOR = const Color(0xff667085);
+// Color NAV_INACTIVE_COLOR = const Color(0xff7d7d7d);
+// Color BORDER_COLOR = const Color(0xFFD0D5DD);
+// Color GREEN_COLOR = const Color(0xFF039754);
+// Color ORANGE_COLOR = const Color(0xFFDC6803);
+// Color LIGHT_COLOR = Colors.white;
+// Color LIGHT_BODY_COLOR = const Color(0xFFF6F6F6);
+// Color DARK_BG_COLOR = const Color(0xFF131313);
+// Color DARK_CARD_COLOR = const Color(0xFF333333);
 
 const MaterialColor PrimaryBlue =
     MaterialColor(_prmarybluePrimaryValue, <int, Color>{
