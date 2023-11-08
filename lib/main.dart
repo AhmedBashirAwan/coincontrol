@@ -3,6 +3,7 @@ import 'package:coincontrol/src/auth/views/login.dart';
 import 'package:coincontrol/src/auth/views/signUp.dart';
 import 'package:coincontrol/src/auth/views/verification.dart';
 import 'package:coincontrol/src/dashboard/views/dashboard.dart';
+import 'package:coincontrol/src/information_forms/views/forms.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';

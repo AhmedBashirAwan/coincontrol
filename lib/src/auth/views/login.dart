@@ -6,6 +6,7 @@ import 'package:coincontrol/src/auth/components/textfields.dart';
 import 'package:coincontrol/src/auth/controllers/authcontroller.dart';
 import 'package:coincontrol/src/auth/views/forgetpassword.dart';
 import 'package:coincontrol/src/auth/views/signUp.dart';
+import 'package:coincontrol/src/information_forms/views/forms.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -227,7 +228,9 @@ class _LoginState extends State<Login> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const Dashboard(),
+                                    builder: (context) => Dashboard(
+                                      uid: credential.user!.uid,
+                                    ),
                                   ),
                                 );
                               } catch (e) {
@@ -324,20 +327,7 @@ class _LoginState extends State<Login> {
                       foregroundColor: Colors.black,
                       text: 'Signin with Facebook',
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Switch(
-                    //       value: appBloc.brightness == Brightness.dark,
-                    //       onChanged: (value) {
-                    //         appBloc.changeTheme();
-                    //       },
-                    //     ),
-                    //   ],
-                    // ),
-                    // SizedBox(
-                    //   height: getHeight(context) * 0.179,
-                    // ),
+                    
                   ],
                 ),
               ),

@@ -1,18 +1,43 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coincontrol/constants.dart';
 import 'package:coincontrol/imports.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../../../theme/colors.dart';
+import '../../Settings/views/settings.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+  String? uid;
+  Dashboard({super.key, required this.uid});
 
   @override
   State<Dashboard> createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
+  Map<String, dynamic> credentials = {};
+  Future<Map<String, dynamic>> fetchingUsersCredentials() async {
+    QuerySnapshot<Map<String, dynamic>> userData = await FirebaseFirestore
+        .instance
+        .collection('userCredentials')
+        .where("user_ID", isEqualTo: widget.uid)
+        .get();
+    print(userData.docs.first.data());
+    setState(() {
+      credentials = userData.docs.first.data();
+    });
+    return userData.docs.first.data();
+  }
+
+  @override
+  void initState() {
+    fetchingUsersCredentials();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +46,7 @@ class _DashboardState extends State<Dashboard> {
             backgroundColor: LIGHT_PRI_COLOR,
             foregroundColor: Colors.white,
             toolbarHeight: 30,
+           
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 20),
@@ -42,35 +68,38 @@ class _DashboardState extends State<Dashboard> {
             ]),
         drawer: Drawer(
           child: Container(
+            padding: const EdgeInsets.all(20),
             color: LIGHT_PRI_COLOR,
-            child: ListView(
-              padding: EdgeInsets.zero,
+            child: Column(
               children: [
-                DrawerHeader(
-                  // margin: EdgeInsets.all(0),
-                  // padding: EdgeInsets.all(0),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 0, color: Colors.transparent),
-                    color: LIGHT_CARDS,
-                  ),
-                  child: const Text('Drawer Header'),
-                ),
+                const Spacer(),
                 ListTile(
                   leading: const Icon(
-                    Icons.home,
+                    Icons.settings,
                   ),
-                  title: const Text('Page 1'),
+                  title: const Text('Settings'),
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MainSettings(),
+                      ),
+                    );
                   },
                 ),
                 ListTile(
                   leading: const Icon(
-                    Icons.train,
+                    Icons.logout_rounded,
                   ),
-                  title: const Text('Page 2'),
-                  onTap: () {
-                    Navigator.pop(context);
+                  title: const Text('Logout'),
+                  onTap: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Login(),
+                      ),
+                    );
                   },
                 ),
               ],
@@ -94,16 +123,21 @@ class _DashboardState extends State<Dashboard> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
-                      children: const [
-                        SizedBox(
+                      children: [
+                        const SizedBox(
                           height: 10,
                         ),
-                        CircleAvatar(
+                        const CircleAvatar(
                           radius: 35,
+                          //   child: Text(
+                          //   credentials['name'] ?? 'N/A',
+                          //   style: const TextStyle(
+                          //       fontSize: 28, fontWeight: FontWeight.w500),
+                          // ),
                         ),
                         Text(
-                          'Username',
-                          style: TextStyle(
+                          credentials['name'] ?? 'N/A',
+                          style: const TextStyle(
                               fontSize: 28, fontWeight: FontWeight.w500),
                         )
                       ],
