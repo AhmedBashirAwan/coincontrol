@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../../../theme/colors.dart';
 import '../../Settings/views/settings.dart';
+import '../../relief_plans/views/reliefplans.dart';
 
 class Dashboard extends StatefulWidget {
   String? uid;
@@ -46,7 +47,6 @@ class _DashboardState extends State<Dashboard> {
             backgroundColor: LIGHT_PRI_COLOR,
             foregroundColor: Colors.white,
             toolbarHeight: 30,
-           
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 20),
@@ -200,15 +200,25 @@ class _DashboardState extends State<Dashboard> {
                       width: 10,
                     ),
                     Expanded(
-                        child: Container(
-                      height: getHeight(context) * 0.2,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white
-                          // color: LIGHT_CARDS
+                        child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReliefPlans(),
                           ),
-                      child: FittedBox(
-                          child: Image.asset("lib/assets/reliefplans.png")),
+                        );
+                      },
+                      child: Container(
+                        height: getHeight(context) * 0.2,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white
+                            // color: LIGHT_CARDS
+                            ),
+                        child: FittedBox(
+                            child: Image.asset("lib/assets/reliefplans.png")),
+                      ),
                     )),
                   ],
                 ),

@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coincontrol/src/auth/components/buttons.dart';
 import 'package:coincontrol/src/auth/components/sociallinks.dart';
 import 'package:coincontrol/src/auth/components/textfields.dart';
@@ -177,7 +178,6 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-
                     SizedBox(
                       height: getHeight(context) * 0.015,
                     ),
@@ -219,20 +219,43 @@ class _LoginState extends State<Login> {
                             ),
                             onPressed: () async {
                               try {
-                                UserCredential credential = await FirebaseAuth
+                                UserCredential credentialss = await FirebaseAuth
                                     .instance
                                     .signInWithEmailAndPassword(
                                         email: _email.text.trim(),
                                         password: _pass.text.trim());
 
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Dashboard(
-                                      uid: credential.user!.uid,
+                                QuerySnapshot<Map<String, dynamic>> data =
+                                    await FirebaseFirestore.instance
+                                        .collection('userCredentials')
+                                        .where('user_ID',
+                                            isEqualTo: credentialss.user!.uid)
+                                        .get();
+
+
+                                if (data.docs.first.data()['new_User'] ==
+                                        true &&
+                                    data.docs.first
+                                        .data()
+                                        .containsKey('new_User')) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => InformationForms(
+                                        uid: credentialss.user!.uid,
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Dashboard(
+                                        uid: credentialss.user!.uid,
+                                      ),
+                                    ),
+                                  );
+                                }
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text('$e')),
@@ -327,7 +350,6 @@ class _LoginState extends State<Login> {
                       foregroundColor: Colors.black,
                       text: 'Signin with Facebook',
                     ),
-                    
                   ],
                 ),
               ),
