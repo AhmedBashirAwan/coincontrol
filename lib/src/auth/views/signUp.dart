@@ -1,15 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coincontrol/imports.dart';
-import 'package:coincontrol/src/auth/controllers/authcontroller.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
-import '../../../constants.dart';
-import '../../../theme/colors.dart';
-import '../components/buttons.dart';
-import '../components/sociallinks.dart';
 
 class SignUp_new extends StatefulWidget {
   const SignUp_new({super.key});
@@ -27,6 +16,7 @@ class _SignUp_newState extends State<SignUp_new> {
   final TextEditingController _confirm = TextEditingController();
   final TextEditingController _name = TextEditingController();
 
+  // method for validating email
   String? validateEmail(String? value) {
     const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
         r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
@@ -42,6 +32,7 @@ class _SignUp_newState extends State<SignUp_new> {
         : null;
   }
 
+  // method for validating password
   String? validatePassword(String? value) {
     if (value!.isEmpty) {
       return 'Password is required';
@@ -58,6 +49,7 @@ class _SignUp_newState extends State<SignUp_new> {
     return null;
   }
 
+  // method for validating Confirm pass
   String? valiadateConfirmPass(String? value) {
     if (value!.isEmpty) {
       return 'Password is required';
@@ -74,6 +66,7 @@ class _SignUp_newState extends State<SignUp_new> {
     }
   }
 
+  //Adding userdetails to the database
   Future<void> addUserDetails({
     String? uid,
     String? fullName,
@@ -85,7 +78,7 @@ class _SignUp_newState extends State<SignUp_new> {
       'email': email,
       'name': fullName,
     };
-    await FirebaseFirestore.instance.collection('userCredentials').add(payload);
+    await FIRE_STORE.collection('userCredentials').add(payload);
   }
 
   bool _isNotValidate = false;
@@ -96,7 +89,7 @@ class _SignUp_newState extends State<SignUp_new> {
     bool _value = false;
 
     return Scaffold(
-      backgroundColor: LIGHT_PRI_COLOR,
+      // backgroundColor: LIGHT_PRI_COLOR,
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(
@@ -279,7 +272,7 @@ class _SignUp_newState extends State<SignUp_new> {
                                 } else {
                                   try {
                                     UserCredential credential =
-                                        await FirebaseAuth.instance
+                                        await FIRE_BASE
                                             .createUserWithEmailAndPassword(
                                                 email: _email.text.trim(),
                                                 password:
@@ -287,8 +280,7 @@ class _SignUp_newState extends State<SignUp_new> {
                                     if (credential != null) {
                                       addUserDetails(
                                         email: _email.text.trim(),
-                                        uid: FirebaseAuth
-                                            .instance.currentUser!.uid,
+                                        uid: USER_ID,
                                         fullName: _name.text.trim(),
                                       );
                                       Navigator.push(
@@ -347,8 +339,12 @@ class _SignUp_newState extends State<SignUp_new> {
                         image: CircleAvatar(
                             radius: getHeight(context) * 0.018,
                             child: Image.asset("lib/assets/google.png")),
-                        backgroundColor: const Color(0xFFCBBCB1),
-                        foregroundColor: Colors.black,
+                        backgroundColor: isDarkTheme(context) == true
+                            ? Colors.grey.shade800
+                            : const Color(0xFFCBBCB1),
+                        foregroundColor: isDarkTheme(context) == true
+                            ? Colors.white
+                            : Colors.black,
                         text: 'Signin with google',
                       ),
                       SizedBox(
@@ -366,8 +362,12 @@ class _SignUp_newState extends State<SignUp_new> {
                             child: FittedBox(
                                 child: Image.asset("lib/assets/facebook.png"))),
                         icon: const Icon(Icons.email_outlined),
-                        backgroundColor: const Color(0xFFCBBCB1),
-                        foregroundColor: Colors.black,
+                        backgroundColor: isDarkTheme(context) == true
+                            ? Colors.grey.shade800
+                            : const Color(0xFFCBBCB1),
+                        foregroundColor: isDarkTheme(context) == true
+                            ? Colors.white
+                            : Colors.black,
                         text: 'Signin with Facebook',
                       ),
                       Padding(
@@ -385,14 +385,16 @@ class _SignUp_newState extends State<SignUp_new> {
                                 );
                               },
                               child: RichText(
-                                  text: const TextSpan(children: <TextSpan>[
+                                  text: TextSpan(children: <TextSpan>[
                                 TextSpan(
                                     text: 'Already have an Account? ',
                                     style: TextStyle(
-                                        color: Colors.black,
+                                        color: isDarkTheme(context) == true
+                                            ? Colors.white
+                                            : Colors.black,
                                         fontWeight: FontWeight.w400,
                                         fontSize: 16)),
-                                TextSpan(
+                                const TextSpan(
                                     text: 'Login',
                                     style: TextStyle(
                                         color: Color(0xFFAA553C),

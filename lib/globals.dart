@@ -1,3 +1,7 @@
-import 'imports.dart';
+import 'package:coincontrol/imports.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+//current user's ID
+String USER_ID = FirebaseAuth.instance.currentUser!.uid;
+
+FirebaseFirestore FIRE_STORE = FirebaseFirestore.instance;
+FirebaseAuth FIRE_BASE = FirebaseAuth.instance;

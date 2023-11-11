@@ -1,8 +1,6 @@
 // ignore_for_file: unused_field, avoid_print
 
-import 'package:flutter/material.dart';
-
-import '../theme/colors.dart';
+import 'package:coincontrol/imports.dart';
 
 class ApplicationBloc extends ChangeNotifier {
   ApplicationBloc() {

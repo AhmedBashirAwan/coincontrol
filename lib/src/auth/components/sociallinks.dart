@@ -1,5 +1,4 @@
-import 'package:coincontrol/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:coincontrol/imports.dart';
 
 class Links extends StatefulWidget {
   final String? text;

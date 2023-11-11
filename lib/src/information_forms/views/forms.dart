@@ -1,12 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coincontrol/imports.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import '../../../constants.dart';
-import '../../../theme/colors.dart';
-import '../../auth/components/buttons.dart';
-import '../../dashboard/views/dashboard.dart';
 
 class InformationForms extends StatefulWidget {
   String uid;
@@ -27,62 +19,54 @@ class InformationStateForms extends State<InformationForms> {
   final password = TextEditingController();
   final country = TextEditingController();
 
-  Future<void> updatingStatus() async {
-    QuerySnapshot<Map<String, dynamic>> data = await FirebaseFirestore.instance
-        .collection('userCredentials')
-        .where('user_ID', isEqualTo: widget.uid)
-        .get();
-
-    if (data.docs.isNotEmpty) {
-      var documentId = data.docs.first.id;
-      await FirebaseFirestore.instance
-          .collection('userCredentials')
-          .doc(documentId)
-          .update({'new_User': false});
-    } else {
-      // Handle the case where no document is found for the given user ID.
-      print("No document found for user ID: ${widget.uid}");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final appBloc = Provider.of<ApplicationBloc>(context);
+
     return Scaffold(
+      appBar: AppBar(
+        foregroundColor:
+            isDarkTheme(context) == true ? Colors.white : Colors.black,
+        backgroundColor:
+            isDarkTheme(context) == true ? Colors.black : LIGHT_PRI_COLOR,
+        toolbarHeight: 30,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Dashboard(
+                        uid: FirebaseAuth.instance.currentUser!.uid,
+                      ),
+                    ),
+                  );
+                },
+                child: const Icon(Icons.close)),
+          )
+        ],
+      ),
       body: Theme(
         data: Theme.of(context)
             .copyWith(colorScheme: ColorScheme.light(primary: LIGHT_SEC_COLOR)),
         child: Padding(
-          padding: const EdgeInsets.only(right: 20, top: 20),
+          padding: const EdgeInsets.only(
+            right: 20,
+          ),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Dashboard(
-                                uid: FirebaseAuth.instance.currentUser!.uid,
-                              ),
-                            ),
-                          );
-                        },
-                        child: const Icon(Icons.close))
-                  ],
-                ),
                 Stepper(
                   // type: StepperType.horizontal,
                   steps: getStep(),
                   currentStep: currentSteps,
-
                   onStepContinue: () {
                     final isLastStep = currentSteps == getStep().length - 1;
                     if (isLastStep) {
                       setState(() => isCompleted = true);
-                      updatingStatus();
+                      FormsController().updatingStatus();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -127,7 +111,13 @@ class InformationStateForms extends State<InformationForms> {
                   decoration: InputDecoration(
                     labelText: 'Job Description',
                     filled: true,
-                    fillColor: Colors.grey[300],
+                    labelStyle: TextStyle(
+                        color: isDarkTheme(context) == true
+                            ? Colors.white
+                            : Colors.black),
+                    fillColor: isDarkTheme(context) == true
+                        ? Colors.black54
+                        : Colors.grey[300],
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide.none,
@@ -142,7 +132,13 @@ class InformationStateForms extends State<InformationForms> {
                   decoration: InputDecoration(
                     labelText: 'Total Income',
                     filled: true,
-                    fillColor: Colors.grey[300],
+                    labelStyle: TextStyle(
+                        color: isDarkTheme(context) == true
+                            ? Colors.white
+                            : Colors.black),
+                    fillColor: isDarkTheme(context) == true
+                        ? Colors.black54
+                        : Colors.grey[300],
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide.none,
@@ -157,7 +153,13 @@ class InformationStateForms extends State<InformationForms> {
                   decoration: InputDecoration(
                     labelText: 'Expenses',
                     filled: true,
-                    fillColor: Colors.grey[300],
+                    labelStyle: TextStyle(
+                        color: isDarkTheme(context) == true
+                            ? Colors.white
+                            : Colors.black),
+                    fillColor: isDarkTheme(context) == true
+                        ? Colors.black54
+                        : Colors.grey[300],
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide.none,
@@ -179,7 +181,13 @@ class InformationStateForms extends State<InformationForms> {
                     decoration: InputDecoration(
                       labelText: 'Total Invested',
                       filled: true,
-                      fillColor: Colors.grey[300],
+                      labelStyle: TextStyle(
+                          color: isDarkTheme(context) == true
+                              ? Colors.white
+                              : Colors.black),
+                      fillColor: isDarkTheme(context) == true
+                          ? Colors.black54
+                          : Colors.grey[300],
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,
@@ -194,7 +202,13 @@ class InformationStateForms extends State<InformationForms> {
                     decoration: InputDecoration(
                       labelText: 'Total Returns',
                       filled: true,
-                      fillColor: Colors.grey[300],
+                      labelStyle: TextStyle(
+                          color: isDarkTheme(context) == true
+                              ? Colors.white
+                              : Colors.black),
+                      fillColor: isDarkTheme(context) == true
+                          ? Colors.black54
+                          : Colors.grey[300],
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,
@@ -209,7 +223,13 @@ class InformationStateForms extends State<InformationForms> {
                     decoration: InputDecoration(
                       labelText: 'Savings ',
                       filled: true,
-                      fillColor: Colors.grey[300],
+                      labelStyle: TextStyle(
+                          color: isDarkTheme(context) == true
+                              ? Colors.white
+                              : Colors.black),
+                      fillColor: isDarkTheme(context) == true
+                          ? Colors.black54
+                          : Colors.grey[300],
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,
@@ -224,7 +244,13 @@ class InformationStateForms extends State<InformationForms> {
                     decoration: InputDecoration(
                       labelText: 'Financial Goals',
                       filled: true,
-                      fillColor: Colors.grey[300],
+                      labelStyle: TextStyle(
+                          color: isDarkTheme(context) == true
+                              ? Colors.white
+                              : Colors.black),
+                      fillColor: isDarkTheme(context) == true
+                          ? Colors.black54
+                          : Colors.grey[300],
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,

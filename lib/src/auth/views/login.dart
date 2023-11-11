@@ -1,23 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coincontrol/src/auth/components/buttons.dart';
-import 'package:coincontrol/src/auth/components/sociallinks.dart';
-import 'package:coincontrol/src/auth/components/textfields.dart';
-import 'package:coincontrol/src/auth/controllers/authcontroller.dart';
-import 'package:coincontrol/src/auth/views/forgetpassword.dart';
-import 'package:coincontrol/src/auth/views/signUp.dart';
-import 'package:coincontrol/src/information_forms/views/forms.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/provider.dart';
-
-import '../../../block/appblock.dart';
-import '../../../constants.dart';
-import '../../../theme/colors.dart';
-import '../../dashboard/views/dashboard.dart';
+import 'package:coincontrol/imports.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -27,6 +8,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  // method for validating email
   String? validateEmail(String? value) {
     const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
         r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
@@ -42,6 +24,7 @@ class _LoginState extends State<Login> {
         : null;
   }
 
+  // method for validating password
   String? validatePassword(String? value) {
     if (value!.isEmpty) {
       return 'Password is required';
@@ -58,6 +41,7 @@ class _LoginState extends State<Login> {
     return null;
   }
 
+  // method for validating confirm pass
   String? valiadateConfirmPass(String? value) {
     if (value!.isEmpty) {
       return 'Password is required';
@@ -219,8 +203,7 @@ class _LoginState extends State<Login> {
                             ),
                             onPressed: () async {
                               try {
-                                UserCredential credentialss = await FirebaseAuth
-                                    .instance
+                                UserCredential credentialss = await FIRE_BASE
                                     .signInWithEmailAndPassword(
                                         email: _email.text.trim(),
                                         password: _pass.text.trim());
@@ -231,7 +214,6 @@ class _LoginState extends State<Login> {
                                         .where('user_ID',
                                             isEqualTo: credentialss.user!.uid)
                                         .get();
-
 
                                 if (data.docs.first.data()['new_User'] ==
                                         true &&
@@ -307,7 +289,7 @@ class _LoginState extends State<Login> {
                           );
 
                           // Once signed in, return the UserCredential
-                          await FirebaseAuth.instance
+                          await FIRE_BASE
                               .signInWithCredential(credential);
                         }
                       },
@@ -316,8 +298,12 @@ class _LoginState extends State<Login> {
                       image: CircleAvatar(
                           radius: getHeight(context) * 0.018,
                           child: Image.asset("lib/assets/google.png")),
-                      backgroundColor: const Color(0xFFCBBCB1),
-                      foregroundColor: Colors.black,
+                      backgroundColor: isDarkTheme(context) == true
+                          ? Colors.grey.shade800
+                          : const Color(0xFFCBBCB1),
+                      foregroundColor: isDarkTheme(context) == true
+                          ? Colors.white
+                          : Colors.black,
                       text: 'Signin with google',
                     ),
                     SizedBox(
@@ -334,7 +320,7 @@ class _LoginState extends State<Login> {
                               FacebookAuthProvider.credential(
                                   loginResult.accessToken!.token);
                           // Once signed in, return the UserCredential
-                          return FirebaseAuth.instance
+                          return FIRE_BASE
                               .signInWithCredential(facebookAuthCredential);
                         }
                       },
@@ -346,8 +332,12 @@ class _LoginState extends State<Login> {
                           child: FittedBox(
                               child: Image.asset("lib/assets/facebook.png"))),
                       icon: const Icon(Icons.email_outlined),
-                      backgroundColor: const Color(0xFFCBBCB1),
-                      foregroundColor: Colors.black,
+                      backgroundColor: isDarkTheme(context) == true
+                          ? Colors.grey.shade800
+                          : const Color(0xFFCBBCB1),
+                      foregroundColor: isDarkTheme(context) == true
+                          ? Colors.white
+                          : Colors.black,
                       text: 'Signin with Facebook',
                     ),
                   ],
@@ -367,14 +357,16 @@ class _LoginState extends State<Login> {
                       );
                     },
                     child: RichText(
-                        text: const TextSpan(children: <TextSpan>[
+                        text: TextSpan(children: <TextSpan>[
                       TextSpan(
                           text: 'Dont have an Account? ',
                           style: TextStyle(
-                              color: Colors.black,
+                              color: isDarkTheme(context) == true
+                                  ? Colors.white
+                                  : Colors.black,
                               fontWeight: FontWeight.w400,
                               fontSize: 16)),
-                      TextSpan(
+                      const TextSpan(
                           text: 'SignUp',
                           style: TextStyle(
                               color: Color(0xFFAA553C),

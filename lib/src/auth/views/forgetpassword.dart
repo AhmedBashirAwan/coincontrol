@@ -1,13 +1,4 @@
 import 'package:coincontrol/imports.dart';
-import 'package:coincontrol/src/auth/controllers/authcontroller.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
-import '../../../constants.dart';
-import '../../../theme/colors.dart';
-import '../components/buttons.dart';
-import '../components/textfields.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -22,6 +13,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<ApplicationBloc>(context);
+
+    // validating email
     String? validateEmail(String? value) {
       const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
           r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
@@ -63,12 +56,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 children: [
                   Expanded(
                     child: RichText(
-                        text: const TextSpan(children: <TextSpan>[
+                        text: TextSpan(children: <TextSpan>[
                       TextSpan(
                           text:
                               'Enter the Email you used to create the account, so we can send you the instructions to reset your password',
                           style: TextStyle(
-                              color: Colors.black54,
+                              color: isDarkTheme(context) == true
+                                  ? Colors.white
+                                  : Colors.black,
                               fontWeight: FontWeight.w400,
                               fontSize: 15)),
                     ])),
@@ -121,7 +116,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ),
                   onPressed: () async {
                     try {
-                      await FirebaseAuth.instance
+                      await FIRE_BASE
                           .sendPasswordResetEmail(email: _email.text.trim());
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -149,14 +144,16 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                 color: appBloc.brightness == Brightness.light
                                     ? Colors.black
                                     : Colors.white),
-                            children: const <TextSpan>[
+                            children: <TextSpan>[
                           TextSpan(
                               text: 'Return to ',
                               style: TextStyle(
-                                  color: Colors.black,
+                                  color: isDarkTheme(context) == true
+                                      ? Colors.white
+                                      : Colors.black,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 16)),
-                          TextSpan(
+                          const TextSpan(
                               text: 'Login',
                               style: TextStyle(
                                   color: Color(0xFFAA553C),

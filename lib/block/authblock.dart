@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:coincontrol/imports.dart';
 
 class AuthBlok extends ChangeNotifier {
   int _activeIndex = 1;

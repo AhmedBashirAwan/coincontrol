@@ -1,11 +1,4 @@
 import 'package:coincontrol/imports.dart';
-import 'package:coincontrol/src/dashboard/views/dashboard.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
-import '../../../constants.dart';
-import '../../../theme/colors.dart';
 
 class MainSettings extends StatefulWidget {
   const MainSettings({super.key});

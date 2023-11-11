@@ -1,14 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/style.dart';
+import 'package:coincontrol/imports.dart';
 
-import '../../../constants.dart';
-import '../../../imports.dart';
-import '../../../theme/colors.dart';
-import '../components/buttons.dart';
-import '../components/textfields.dart';
 
 class Verification extends StatefulWidget {
   const Verification({super.key});

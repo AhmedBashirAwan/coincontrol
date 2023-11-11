@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:coincontrol/imports.dart';
 
 // ignore: must_be_immutable
 class CustomElevatedBtn extends StatelessWidget {

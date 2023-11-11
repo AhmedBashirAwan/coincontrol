@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:coincontrol/imports.dart';
 
 class Fields extends StatefulWidget {
   String? hint;

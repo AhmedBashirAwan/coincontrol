@@ -1,30 +1,18 @@
-import 'package:google_fonts/google_fonts.dart';
+import 'package:coincontrol/imports.dart';
 
-import 'globals.dart';
-import 'imports.dart';
-
+//method to get height through percentage
 getHeight(BuildContext context) {
   return MediaQuery.of(context).size.height;
 }
 
+//method to get width through percentage
 getWidth(BuildContext context) {
   return MediaQuery.of(context).size.width;
 }
 
+//method to check weather darkmode is enabled or not
 bool isDarkTheme(BuildContext context) {
   final appBloc =
       Provider.of<ApplicationBloc>(context, listen: false);
   return appBloc.brightness == Brightness.dark;
-}
-
-TextStyle textStyle(double size,
-    [FontWeight? weight, Color? color, TextDecoration? decoration]) {
-  color ??= Colors.black;
-  weight ??= FontWeight.w500;
-  return GoogleFonts.poppins(
-      fontSize: size, fontWeight: weight, color: color, decoration: decoration);
-}
-
-TextStyle heading(double size) {
-  return GoogleFonts.roboto(fontSize: size, fontWeight: FontWeight.bold);
 }
