@@ -73,7 +73,7 @@ class _SignUp_newState extends State<SignUp_new> {
     String? email,
   }) async {
     Map<String, dynamic> payload = {
-      'user_ID': uid,
+      'user_ID': USER_ID,
       'new_User': true,
       'email': email,
       'name': fullName,

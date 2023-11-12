@@ -12,12 +12,13 @@ class InformationStateForms extends State<InformationForms> {
   int currentSteps = 0;
   bool isCompleted = false;
 
-  final account = TextEditingController();
-  final province = TextEditingController();
-  final city = TextEditingController();
-  final street = TextEditingController();
-  final password = TextEditingController();
-  final country = TextEditingController();
+  final job = TextEditingController();
+  final income = TextEditingController();
+  final expenses = TextEditingController();
+  final investments = TextEditingController();
+  final returns = TextEditingController();
+  final savings = TextEditingController();
+  final familyMembers = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +68,14 @@ class InformationStateForms extends State<InformationForms> {
                     if (isLastStep) {
                       setState(() => isCompleted = true);
                       FormsController().updatingStatus();
+                      FormsController().sendingForms(
+                          expense: expenses.text.trim(),
+                          income: income.text.trim(),
+                          job: job.text.trim(),
+                          mems: familyMembers.text.trim(),
+                          investment: investments.text.trim(),
+                          returns: returns.text.trim(),
+                          savings: savings.text.trim());
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -107,7 +116,7 @@ class InformationStateForms extends State<InformationForms> {
                   height: 5,
                 ),
                 TextFormField(
-                  controller: account,
+                  controller: job,
                   decoration: InputDecoration(
                     labelText: 'Job Description',
                     filled: true,
@@ -128,7 +137,7 @@ class InformationStateForms extends State<InformationForms> {
                   height: 10,
                 ),
                 TextFormField(
-                  controller: password,
+                  controller: income,
                   decoration: InputDecoration(
                     labelText: 'Total Income',
                     filled: true,
@@ -149,7 +158,7 @@ class InformationStateForms extends State<InformationForms> {
                   height: 10,
                 ),
                 TextFormField(
-                  controller: password,
+                  controller: expenses,
                   decoration: InputDecoration(
                     labelText: 'Expenses',
                     filled: true,
@@ -177,7 +186,7 @@ class InformationStateForms extends State<InformationForms> {
               child: Column(
                 children: [
                   TextFormField(
-                    controller: country,
+                    controller: investments,
                     decoration: InputDecoration(
                       labelText: 'Total Invested',
                       filled: true,
@@ -198,7 +207,7 @@ class InformationStateForms extends State<InformationForms> {
                     height: 10,
                   ),
                   TextFormField(
-                    controller: province,
+                    controller: returns,
                     decoration: InputDecoration(
                       labelText: 'Total Returns',
                       filled: true,
@@ -219,7 +228,7 @@ class InformationStateForms extends State<InformationForms> {
                     height: 10,
                   ),
                   TextFormField(
-                    controller: city,
+                    controller: savings,
                     decoration: InputDecoration(
                       labelText: 'Savings ',
                       filled: true,
@@ -240,9 +249,9 @@ class InformationStateForms extends State<InformationForms> {
                     height: 10,
                   ),
                   TextFormField(
-                    controller: street,
+                    controller: familyMembers,
                     decoration: InputDecoration(
-                      labelText: 'Financial Goals',
+                      labelText: 'Family Members',
                       filled: true,
                       labelStyle: TextStyle(
                           color: isDarkTheme(context) == true
