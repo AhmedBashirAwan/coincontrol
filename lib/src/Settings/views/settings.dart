@@ -12,28 +12,31 @@ class _MainSettingsState extends State<MainSettings> {
   Widget build(BuildContext context) {
     final appBloc = Provider.of<ApplicationBloc>(context);
     return Scaffold(
+      appBar: AppBar(
+        elevation: 5,
+        // toolbarHeight: getHeight(context) * 0.03,
+        leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            )),
+        title: const Text(
+          'Settings',
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
+        ),
+        backgroundColor:
+            isDarkTheme(context) == true ? Colors.black : LIGHT_SEC_COLOR,
+      ),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              children: [
-                InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Dashboard(
-                            uid: FirebaseAuth.instance.currentUser!.uid,
-                          ),
-                        ),
-                      );
-                    },
-                    child: const Icon(Icons.arrow_back)),
-              ],
-            ),
             Expanded(
               child: Center(
                 child: Row(

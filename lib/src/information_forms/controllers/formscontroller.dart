@@ -38,6 +38,6 @@ class FormsController {
       'savings': savings,
       'family_members': mems,
     };
-    await FIRE_STORE.collection('collectionPath').add(payload);
+    await FIRE_STORE.collection('forms').add(payload);
   }
 }

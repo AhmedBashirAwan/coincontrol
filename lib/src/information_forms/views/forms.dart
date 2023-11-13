@@ -23,7 +23,6 @@ class InformationStateForms extends State<InformationForms> {
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<ApplicationBloc>(context);
-
     return Scaffold(
       appBar: AppBar(
         foregroundColor:
@@ -60,7 +59,6 @@ class InformationStateForms extends State<InformationForms> {
             child: Column(
               children: [
                 Stepper(
-                  // type: StepperType.horizontal,
                   steps: getStep(),
                   currentStep: currentSteps,
                   onStepContinue: () {
@@ -89,7 +87,6 @@ class InformationStateForms extends State<InformationForms> {
                       setState(() => currentSteps += 1);
                     }
                   },
-
                   onStepTapped: (step) => setState(() {
                     currentSteps = step;
                   }),

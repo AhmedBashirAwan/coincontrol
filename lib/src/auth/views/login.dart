@@ -88,7 +88,7 @@ class _LoginState extends State<Login> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Text('Coin Control',
+                        Text('AI Finance Control',
                             style: TextStyle(
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold,
@@ -203,8 +203,8 @@ class _LoginState extends State<Login> {
                             ),
                             onPressed: () async {
                               try {
-                                UserCredential credentialss = await FIRE_BASE
-                                    .signInWithEmailAndPassword(
+                                UserCredential credentialss =
+                                    await FIRE_BASE.signInWithEmailAndPassword(
                                         email: _email.text.trim(),
                                         password: _pass.text.trim());
 
@@ -289,8 +289,7 @@ class _LoginState extends State<Login> {
                           );
 
                           // Once signed in, return the UserCredential
-                          await FIRE_BASE
-                              .signInWithCredential(credential);
+                          await FIRE_BASE.signInWithCredential(credential);
                         }
                       },
                       height: getHeight(context) * 0.06,
