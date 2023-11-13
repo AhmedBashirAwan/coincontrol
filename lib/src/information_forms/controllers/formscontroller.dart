@@ -20,24 +20,41 @@ class FormsController {
     }
   }
 
-  // Sending Data in forms table
-  Future<void> sendingForms(
+  //Sending data in forms
+  Future<void> sendingData(
       {String? job,
-      String? income,
-      String? expense,
-      String? investment,
-      String? returns,
       String? mems,
-      String? savings}) async {
+      String? income,
+      String? savings,
+      String? condition,
+      String? rent,
+      String? bills,
+      String? transportation,
+      String? groceries,
+      String? education,
+      String? others,
+      String? otherIncomes,
+      String? investmentReturns,
+      String? debts}) async {
     Map<String, dynamic> payload = {
       'job': job,
-      'income': income,
-      'expense': expense,
-      'investment': investment,
-      'returns': returns,
-      'savings': savings,
       'family_members': mems,
+      'income': income,
+      'savings': savings,
+      'condition': condition,
     };
-    await FIRE_STORE.collection('forms').add(payload);
+    Map<String, dynamic> data = {
+      'rent': rent,
+      'bills': bills,
+      'transportation': transportation,
+      'groceries': groceries,
+      'education': education,
+      'others': others,
+      'debts': debts,
+      'other_Income': otherIncomes,
+      'investment_Returns': investmentReturns,
+    };
+    await FIRE_STORE.collection('personal_Info').add(payload);
+    await FIRE_STORE.collection('finance_Info').add(data);
   }
 }

@@ -10,6 +10,8 @@ class GoalSetting extends StatefulWidget {
 }
 
 class _GoalSettingState extends State<GoalSetting> {
+  String dropdownValue = 'Increase Savings';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,11 +34,48 @@ class _GoalSettingState extends State<GoalSetting> {
             isDarkTheme(context) == true ? Colors.black : LIGHT_SEC_COLOR,
       ),
       body: SafeArea(
-          child: Center(
-              child: Text(
-        "Goal Settings",
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-      ))),
+          child: Column(
+        children: [
+          SizedBox(
+            height: getHeight(context) * 0.05,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Goal Settings  :',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+              ),
+              SizedBox(
+                width: getWidth(context) * 0.1,
+              ),
+              // const Spacer(),
+              DropdownButton<String>(
+                value: dropdownValue,
+                items: <String>[
+                  'Increase Savings',
+                  'Luxury Lifestyle',
+                  'Good Lifestyle'
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w400),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dropdownValue = newValue!;
+                  });
+                },
+              ),
+            ],
+          ),
+        ],
+      )),
     );
   }
 }

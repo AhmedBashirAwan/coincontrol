@@ -1,6 +1,7 @@
 import 'package:coincontrol/imports.dart';
 import 'package:coincontrol/src/Investmentplans/views/investmentplans.dart';
 import 'package:coincontrol/src/dashboard/controllers/dashboardController.dart';
+import 'package:coincontrol/src/debtrecovery/views/debtrecovery.dart';
 
 import '../../budgetcreation/views/goalsettings.dart';
 
@@ -135,111 +136,142 @@ class _DashboardState extends State<Dashboard> {
               ),
               Expanded(
                   child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: isDarkTheme(context) == true
-                            ? Colors.black54
-                            : LIGHT_CARDS),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const GoalSetting(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              height: getHeight(context) * 0.08,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: isDarkTheme(context) == true
-                                      ? Colors.grey.shade800
-                                      : LIGHT_SEC_COLOR),
-                              child: const Center(
-                                  child: Text(
-                                "AI Budget Creation",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w400),
-                              )),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: isDarkTheme(context) == true
+                        ? Colors.black54
+                        : LIGHT_CARDS),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const GoalSetting(),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            height: getHeight(context) * 0.08,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: isDarkTheme(context) == true
-                                    ? Colors.grey.shade800
-                                    : LIGHT_SEC_COLOR),
-                            child: const Center(
-                                child: Text(
-                              "AI Debt Recovery",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w400),
-                            )),
-                          ),
-                        ],
+                          );
+                        },
+                        child: Container(
+                          height: getHeight(context) * 0.08,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: isDarkTheme(context) == true
+                                  ? Colors.grey.shade800
+                                  : LIGHT_SEC_COLOR),
+                          child: const Center(
+                              child: Text(
+                            "AI Budget Creation",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w400),
+                          )),
+                        ),
                       ),
-                    ),
-                  )),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DebtRecovery(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          height: getHeight(context) * 0.08,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: isDarkTheme(context) == true
+                                  ? Colors.grey.shade800
+                                  : LIGHT_SEC_COLOR),
+                          child: const Center(
+                              child: Text(
+                            "AI Debt Recovery",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w400),
+                          )),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )),
               const SizedBox(
                 height: 15,
               ),
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const InvestmentPlans(),
+              Row(
+                children: [
+                  Expanded(
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const InvestmentPlans(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: getHeight(context) * 0.2,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                          // color: LIGHT_CARDS
                           ),
-                        );
-                      },
-                      child: Container(
-                        height: getHeight(context) * 0.2,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white
-                            // color: LIGHT_CARDS
-                            ),
-                        child: Image.asset("lib/assets/Investment.png"),
-                      ),
-                    )),
-                    const SizedBox(
-                      width: 10,
+                      child: Image.asset("lib/assets/Investment.png"),
                     ),
-                    Expanded(
-                        child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ReliefPlans(),
+                  )),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ReliefPlans(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: getHeight(context) * 0.2,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white
+                          // color: LIGHT_CARDS
                           ),
-                        );
-                      },
-                      child: Container(
-                        height: getHeight(context) * 0.2,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white
-                            // color: LIGHT_CARDS
-                            ),
-                        child: FittedBox(
-                            child: Image.asset("lib/assets/reliefplans.png")),
-                      ),
-                    )),
+                      child: FittedBox(
+                          child: Image.asset("lib/assets/reliefplans.png")),
+                    ),
+                  )),
+                ],
+              ),
+              SizedBox(
+                height: getHeight(context) * 0.01,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children:  [
+                    const Text(
+                      "Investmnet Plans",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      width: getWidth(context)*0.2,
+                    ),
+                   const Text(
+                      "Relief Plans",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    )
                   ],
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:coincontrol/imports.dart';
+import 'package:coincontrol/src/information_forms/components/formsfields.dart';
 
 class InformationForms extends StatefulWidget {
   String uid;
@@ -11,6 +12,7 @@ class InformationForms extends StatefulWidget {
 class InformationStateForms extends State<InformationForms> {
   int currentSteps = 0;
   bool isCompleted = false;
+  String dropdownValue = 'Average';
 
   final job = TextEditingController();
   final income = TextEditingController();
@@ -19,6 +21,15 @@ class InformationStateForms extends State<InformationForms> {
   final returns = TextEditingController();
   final savings = TextEditingController();
   final familyMembers = TextEditingController();
+  final rent = TextEditingController();
+  final bills = TextEditingController();
+  final transportation = TextEditingController();
+  final groceries = TextEditingController();
+  final education = TextEditingController();
+  final others = TextEditingController();
+  final otherIncome = TextEditingController();
+  final investmentReturn = TextEditingController();
+  final debt = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +77,21 @@ class InformationStateForms extends State<InformationForms> {
                     if (isLastStep) {
                       setState(() => isCompleted = true);
                       FormsController().updatingStatus();
-                      FormsController().sendingForms(
-                          expense: expenses.text.trim(),
-                          income: income.text.trim(),
+                      FormsController().sendingData(
                           job: job.text.trim(),
                           mems: familyMembers.text.trim(),
-                          investment: investments.text.trim(),
-                          returns: returns.text.trim(),
-                          savings: savings.text.trim());
+                          income: income.text.trim(),
+                          savings: savings.text.trim(),
+                          condition: dropdownValue.toString(),
+                          rent: rent.text.trim(),
+                          bills: bills.text.trim(),
+                          transportation: transportation.text.trim(),
+                          groceries: groceries.text.trim(),
+                          education: education.text.trim(),
+                          others: others.text.trim(),
+                          otherIncomes: otherIncome.text.trim(),
+                          investmentReturns: investmentReturn.text.trim(),
+                          debts: debt.text.trim());
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -106,70 +124,70 @@ class InformationStateForms extends State<InformationForms> {
         Step(
             state: currentSteps > 0 ? StepState.complete : StepState.indexed,
             isActive: currentSteps >= 0,
-            title: const Text('Job Details'),
+            title: const Text('Personal Information'),
             content: Column(
               children: [
                 const SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
-                TextFormField(
+                FormsFields(
                   controller: job,
-                  decoration: InputDecoration(
-                    labelText: 'Job Description',
-                    filled: true,
-                    labelStyle: TextStyle(
-                        color: isDarkTheme(context) == true
-                            ? Colors.white
-                            : Colors.black),
-                    fillColor: isDarkTheme(context) == true
-                        ? Colors.black54
-                        : Colors.grey[300],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
+                  label: "Job Description",
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
+                FormsFields(
+                  controller: familyMembers,
+                  label: "Family Members",
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                FormsFields(
                   controller: income,
-                  decoration: InputDecoration(
-                    labelText: 'Total Income',
-                    filled: true,
-                    labelStyle: TextStyle(
-                        color: isDarkTheme(context) == true
-                            ? Colors.white
-                            : Colors.black),
-                    fillColor: isDarkTheme(context) == true
-                        ? Colors.black54
-                        : Colors.grey[300],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
+                  label: "Mothly Income",
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                  controller: expenses,
-                  decoration: InputDecoration(
-                    labelText: 'Expenses',
-                    filled: true,
-                    labelStyle: TextStyle(
-                        color: isDarkTheme(context) == true
-                            ? Colors.white
-                            : Colors.black),
-                    fillColor: isDarkTheme(context) == true
-                        ? Colors.black54
-                        : Colors.grey[300],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none,
-                    ),
+                FormsFields(
+                  controller: savings,
+                  label: "Mothly Savings",
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    children: [
+                      const Text(
+                        'Living Condition  :',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w400),
+                      ),
+                      const Spacer(),
+                      DropdownButton<String>(
+                        value: dropdownValue,
+                        items: <String>['Luxury', 'Good', 'Average', 'Low']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w400),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue!;
+                          });
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -177,91 +195,67 @@ class InformationStateForms extends State<InformationForms> {
         Step(
             state: currentSteps > 1 ? StepState.complete : StepState.indexed,
             isActive: currentSteps >= 1,
-            title: const Text('Investments'),
+            title: const Text('Mothly Expense'),
             content: Container(
               padding: const EdgeInsets.only(top: 5),
               child: Column(
                 children: [
-                  TextFormField(
-                    controller: investments,
-                    decoration: InputDecoration(
-                      labelText: 'Total Invested',
-                      filled: true,
-                      labelStyle: TextStyle(
-                          color: isDarkTheme(context) == true
-                              ? Colors.white
-                              : Colors.black),
-                      fillColor: isDarkTheme(context) == true
-                          ? Colors.black54
-                          : Colors.grey[300],
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  FormsFields(
+                    controller: rent,
+                    label: "Rent",
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    controller: returns,
-                    decoration: InputDecoration(
-                      labelText: 'Total Returns',
-                      filled: true,
-                      labelStyle: TextStyle(
-                          color: isDarkTheme(context) == true
-                              ? Colors.white
-                              : Colors.black),
-                      fillColor: isDarkTheme(context) == true
-                          ? Colors.black54
-                          : Colors.grey[300],
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
+                  FormsFields(
+                    controller: bills,
+                    label: "Bills",
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    controller: savings,
-                    decoration: InputDecoration(
-                      labelText: 'Savings ',
-                      filled: true,
-                      labelStyle: TextStyle(
-                          color: isDarkTheme(context) == true
-                              ? Colors.white
-                              : Colors.black),
-                      fillColor: isDarkTheme(context) == true
-                          ? Colors.black54
-                          : Colors.grey[300],
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
+                  FormsFields(
+                    controller: transportation,
+                    label: "Traportation Cost",
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    controller: familyMembers,
-                    decoration: InputDecoration(
-                      labelText: 'Family Members',
-                      filled: true,
-                      labelStyle: TextStyle(
-                          color: isDarkTheme(context) == true
-                              ? Colors.white
-                              : Colors.black),
-                      fillColor: isDarkTheme(context) == true
-                          ? Colors.black54
-                          : Colors.grey[300],
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
+                  FormsFields(
+                    controller: groceries,
+                    label: "Groceries",
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  FormsFields(
+                    controller: education,
+                    label: "Education",
+                  ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
+                  // FormsFields(
+                  //   controller: familyMembers,
+                  //   label: "Medication",
+                  // ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
+                  // FormsFields(
+                  //   controller: familyMembers,
+                  //   label: "Instalments",
+                  // ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  FormsFields(
+                    controller: others,
+                    label: "Others",
                   ),
                 ],
               ),
@@ -269,10 +263,30 @@ class InformationStateForms extends State<InformationForms> {
         Step(
             state: currentSteps > 3 ? StepState.complete : StepState.indexed,
             isActive: currentSteps >= 2,
-            title: const Text('Complete'),
+            title: const Text('Others'),
             content: Column(
-              children: const [
-                Text('If you have completed your form then Click Continue')
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                FormsFields(
+                  controller: otherIncome,
+                  label: "Other Income",
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                FormsFields(
+                  controller: investmentReturn,
+                  label: "Investment Returns",
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                FormsFields(
+                  controller: debt,
+                  label: "Debts",
+                ),
               ],
             )),
       ];
