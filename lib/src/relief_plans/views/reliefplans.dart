@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:coincontrol/imports.dart';
 import 'package:coincontrol/src/relief_plans/controllers/maps.dart';
 
@@ -9,6 +11,12 @@ class ReliefPlans extends StatefulWidget {
 }
 
 class _ReliefPlansState extends State<ReliefPlans> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<ApplicationBloc>(context);
@@ -61,51 +69,64 @@ class _ReliefPlansState extends State<ReliefPlans> {
                           return Padding(
                             padding: const EdgeInsets.only(
                                 top: 20, right: 20, left: 20),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10)),
-                              height: getHeight(context) * 0.15,
-                              child: Material(
-                                elevation: 4,
-                                child: Row(children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: SizedBox(
-                                      height: getHeight(context) * 0.15,
-                                      width: getWidth(context) * 0.4,
-                                      child: FittedBox(
-                                        child: Image.network(
-                                            plans[index]['imageURL']),
+                            child: InkWell(
+                              onTap: () {
+                                // plans[index]['link'];
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10)),
+                                height: getHeight(context) * 0.15,
+                                child: Material(
+                                  elevation: 4,
+                                  child: Row(children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        height: getHeight(context) * 0.15,
+                                        width: getWidth(context) * 0.4,
+                                        child: FittedBox(
+                                          child: Image.network(
+                                              plans[index]['imageURL']),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        plans[index]["title"],
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500,
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(
+                                          height: 5,
                                         ),
-                                      ),
-                                      Text(
-                                        plans[index]['description'],
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
+                                        SizedBox(
+                                          width: getWidth(context) * 0.4,
+                                          child: Text(
+                                            plans[index]["title"],
+                                            style: const TextStyle(
+                                              overflow: TextOverflow.ellipsis,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
                                         ),
-                                      )
-                                    ],
-                                  )
-                                ]),
+                                        Container(
+                                          width: getWidth(context) * 0.4,
+                                          child: Text(
+                                            plans[index]['description'],
+                                            style: const TextStyle(
+                                              overflow: TextOverflow.ellipsis,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ]),
+                                ),
                               ),
                             ),
                           );

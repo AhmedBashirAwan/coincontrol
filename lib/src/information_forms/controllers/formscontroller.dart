@@ -37,6 +37,7 @@ class FormsController {
       String? investmentReturns,
       String? debts}) async {
     Map<String, dynamic> payload = {
+      'user_ID': FIRE_BASE.currentUser!.uid,
       'job': job,
       'family_members': mems,
       'income': income,
@@ -44,6 +45,7 @@ class FormsController {
       'condition': condition,
     };
     Map<String, dynamic> data = {
+      'user_ID': FIRE_BASE.currentUser!.uid,
       'rent': rent,
       'bills': bills,
       'transportation': transportation,

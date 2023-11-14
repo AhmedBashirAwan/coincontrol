@@ -140,6 +140,7 @@ class InformationStateForms extends State<InformationForms> {
                 FormsFields(
                   controller: familyMembers,
                   label: "Family Members",
+                  inputType: TextInputType.number,
                 ),
                 const SizedBox(
                   height: 10,
