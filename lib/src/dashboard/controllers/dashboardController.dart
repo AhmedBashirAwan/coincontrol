@@ -19,4 +19,5 @@ class DashboardController {
       return {}; // or null, depending on how you want to handle this case
     }
   }
+
 }

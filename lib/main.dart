@@ -26,13 +26,15 @@ class MyApp extends StatelessWidget {
       theme: Provider.of<ApplicationBloc>(context).getTheme(),
       home: FutureBuilder<void>(
         builder: (context, snapshot) {
-          if (FirebaseAuth.instance.currentUser != null) {
-            return Dashboard(
-              uid: FirebaseAuth.instance.currentUser!.uid,
-            );
-          } else {
-            return const Login();
-          }
+          // if (FirebaseAuth.instance.currentUser != null) {
+          //   return Dashboard(
+          //     uid: FirebaseAuth.instance.currentUser!.uid,
+          //   );
+          // } else {
+          return Dashboard(
+            uid: USER_ID,
+          );
+          // }
         },
       ),
     );

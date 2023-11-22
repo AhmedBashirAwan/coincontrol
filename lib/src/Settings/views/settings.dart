@@ -1,4 +1,7 @@
 import 'package:coincontrol/imports.dart';
+import 'package:coincontrol/src/Settings/views/expense.dart';
+import 'package:coincontrol/src/Settings/views/personal_info.dart';
+import 'package:coincontrol/src/Settings/views/profile_info.dart';
 
 class MainSettings extends StatefulWidget {
   const MainSettings({super.key});
@@ -67,7 +70,14 @@ class _MainSettingsState extends State<MainSettings> {
                         ),
                         const Spacer(),
                         InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const PersonalInfo(),
+                                ),
+                              );
+                            },
                             child: const Icon(
                               Icons.arrow_forward_ios,
                               size: 23,
@@ -87,7 +97,14 @@ class _MainSettingsState extends State<MainSettings> {
                         ),
                         const Spacer(),
                         InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const EditPersonal(),
+                                ),
+                              );
+                            },
                             child: const Icon(
                               Icons.arrow_forward_ios,
                               size: 23,
@@ -107,7 +124,14 @@ class _MainSettingsState extends State<MainSettings> {
                         ),
                         const Spacer(),
                         InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Expense(),
+                                ),
+                              );
+                            },
                             child: const Icon(
                               Icons.arrow_forward_ios,
                               size: 23,
