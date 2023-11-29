@@ -1,13 +1,5 @@
 List<Map<String, dynamic>> plans = [
   {
-    'imageURL': 'https://newsimage.radio.gov.pk/20230807/1691430968.jpg',
-    'title': 'Ehsas Program',
-    'link': '',
-    'applied': false,
-    'description':
-        'Through this program, needy and deserving families can buy Atta, ghee, and cheeni at a discount. The Wazir E Azam Shehbaz Sharif Ehsaas Program continues to help more needy and impoverished families.',
-  },
-  {
     'imageURL':
         'https://swo.gov.pk/SiteImage/NewsEvents/WhatsApp%20Image%202023-10-05%20at%208.52.51%20PM.jpeg',
     'title': 'Staff welfare org',

@@ -1,4 +1,5 @@
 import 'package:coincontrol/imports.dart';
+import 'package:coincontrol/src/Settings/controllers/settings_controller.dart';
 import 'package:coincontrol/src/Settings/views/expense.dart';
 import 'package:coincontrol/src/Settings/views/personal_info.dart';
 import 'package:coincontrol/src/Settings/views/profile_info.dart';
@@ -14,7 +15,6 @@ class _MainSettingsState extends State<MainSettings> {
   bool silent = false;
   int _radioValue = 1;
 
-  @override
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<ApplicationBloc>(context);
@@ -41,189 +41,235 @@ class _MainSettingsState extends State<MainSettings> {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Container(
-              child: Column(
-                children: [
-                  Row(
-                    children: const [
-                      Text(
-                        'Account',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.w500),
+        child: FutureBuilder(
+            future: SettingsController().fetchingUsersCredentials(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                bool neya = snapshot.data!['new_User'];
+                return Column(
+                  children: [
+                    Container(
+                      child: Column(
+                        children: [
+                          const Row(
+                            children: [
+                              Text(
+                                'Account',
+                                style: TextStyle(
+                                    fontSize: 22, fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'Edit profile',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                const Spacer(),
+                                InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const PersonalInfo(),
+                                        ),
+                                      );
+                                    },
+                                    child: const Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 23,
+                                    ))
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'Personal Information',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                const Spacer(),
+                                InkWell(
+                                    onTap: () {
+                                      if (neya == true) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                InformationForms(
+                                              uid: FirebaseAuth
+                                                  .instance.currentUser!.uid,
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const EditPersonal(),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    child: const Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 23,
+                                    ))
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'Expenses',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                const Spacer(),
+                                InkWell(
+                                    onTap: () {
+                                      if (neya == true) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                InformationForms(
+                                              uid: FirebaseAuth
+                                                  .instance.currentUser!.uid,
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const Expense(),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    child: const Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 23,
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Row(
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
                       children: [
                         const Text(
-                          'Edit profile',
+                          'Notifications',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w400),
+                              fontSize: 22, fontWeight: FontWeight.w500),
                         ),
                         const Spacer(),
-                        InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const PersonalInfo(),
-                                ),
-                              );
-                            },
-                            child: const Icon(
-                              Icons.arrow_forward_ios,
-                              size: 23,
-                            ))
+                        Switch(
+                          value: silent,
+                          onChanged: (value) {
+                            setState(() {
+                              if (silent == false) {
+                                silent = true;
+                              } else {
+                                silent = false;
+                              }
+                            });
+                          },
+                        ),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Row(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Personal Information',
+                          'Language',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w400),
+                              fontSize: 22, fontWeight: FontWeight.w500),
                         ),
                         const Spacer(),
-                        InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const EditPersonal(),
-                                ),
-                              );
-                            },
-                            child: const Icon(
-                              Icons.arrow_forward_ios,
-                              size: 23,
-                            ))
+                        Radio(
+                          activeColor: isDarkTheme(context) == true
+                              ? Colors.purple
+                              : Colors.black,
+                          value: 1,
+                          groupValue: _radioValue,
+                          onChanged: (value) {
+                            setState(() {
+                              _radioValue = 1;
+                            });
+                          },
+                        ),
+                        const Text(
+                          "English",
+                        ),
+                        Radio(
+                          activeColor: isDarkTheme(context) == true
+                              ? Colors.purple
+                              : Colors.black,
+                          value: 2,
+                          groupValue: _radioValue,
+                          onChanged: (value) {
+                            setState(() {
+                              _radioValue = 2;
+                            });
+                          },
+                        ),
+                        const Text(
+                          "Urdu",
+                        ),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Row(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Expenses',
+                          'Dark Mode',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w400),
+                              fontSize: 22, fontWeight: FontWeight.w500),
                         ),
                         const Spacer(),
-                        InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Expense(),
-                                ),
-                              );
-                            },
-                            child: const Icon(
-                              Icons.arrow_forward_ios,
-                              size: 23,
-                            ))
+                        Switch(
+                          value: appBloc.brightness == Brightness.dark,
+                          onChanged: (value) {
+                            appBloc.changeTheme();
+                          },
+                        ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                const Text(
-                  'Notifications',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
-                ),
-                const Spacer(),
-                Switch(
-                  value: silent,
-                  onChanged: (value) {
-                    setState(() {
-                      if (silent == false) {
-                        silent = true;
-                      } else {
-                        silent = false;
-                      }
-                    });
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Language',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
-                ),
-                const Spacer(),
-                Radio(
-                  activeColor: isDarkTheme(context) == true
-                      ? Colors.purple
-                      : Colors.black,
-                  value: 1,
-                  groupValue: _radioValue,
-                  onChanged: (value) {
-                    setState(() {
-                      _radioValue = 1;
-                    });
-                  },
-                ),
-                const Text(
-                  "English",
-                ),
-                Radio(
-                  activeColor: isDarkTheme(context) == true
-                      ? Colors.purple
-                      : Colors.black,
-                  value: 2,
-                  groupValue: _radioValue,
-                  onChanged: (value) {
-                    setState(() {
-                      _radioValue = 2;
-                    });
-                  },
-                ),
-                const Text(
-                  "Urdu",
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Dark Mode',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
-                ),
-                const Spacer(),
-                Switch(
-                  value: appBloc.brightness == Brightness.dark,
-                  onChanged: (value) {
-                    appBloc.changeTheme();
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
+                  ],
+                );
+              }
+            }),
       )),
     );
   }

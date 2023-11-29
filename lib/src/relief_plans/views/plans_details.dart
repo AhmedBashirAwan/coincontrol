@@ -1,9 +1,12 @@
 import 'package:coincontrol/imports.dart';
 import 'package:coincontrol/src/relief_plans/controllers/maps.dart';
+import 'package:coincontrol/src/relief_plans/controllers/reliefplanscontroller.dart';
 
 class PlansDetails extends StatefulWidget {
   int index;
-  Map<String, dynamic> plan = {};
+  Map<String, dynamic> plan = {
+    'user_ID': FirebaseAuth.instance.currentUser!.uid,
+  };
   PlansDetails({super.key, required this.plan, required this.index});
 
   @override
@@ -85,14 +88,14 @@ class _PlansDetailsState extends State<PlansDetails> {
                     ),
                     onPressed: () async {
                       Map<String, dynamic> pla = {
-                        'imageURL': plans[widget.index]['imageURL'],
-                        'title': plans[widget.index]['title'],
-                        'link': plans[widget.index]['applied'],
+                        'user_ID': FirebaseAuth.instance.currentUser!.uid,
+                        'imageURL': widget.plan['imageURL'],
+                        'title': widget.plan['title'],
+                        'link': widget.plan['applied'],
                         'applied': true,
-                        'description': plans[widget.index]['description']
+                        'description': widget.plan['description']
                       };
-                      appliedPlans.add(pla);
-                      print(appliedPlans);
+                      ReliefPlansControllers().applyReliefs(pla);
                     },
                   ),
                 ),

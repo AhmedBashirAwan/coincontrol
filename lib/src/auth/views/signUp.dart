@@ -10,6 +10,7 @@ class SignUp_new extends StatefulWidget {
 class _SignUp_newState extends State<SignUp_new> {
   final _formKey = GlobalKey<FormState>();
   bool obscure = true;
+  bool isEmailVerified = false;
   bool confirmationObsecure = true;
   final TextEditingController _password = TextEditingController();
   final TextEditingController _email = TextEditingController();
@@ -95,8 +96,10 @@ class _SignUp_newState extends State<SignUp_new> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                height: getHeight(context) * 0.07,
+              ),
               Row(
                 children: const [
                   Text('Create Account',
@@ -234,7 +237,6 @@ class _SignUp_newState extends State<SignUp_new> {
                                 },
                                 child:
                                     const Icon(Icons.remove_red_eye_outlined)),
-
                             // errorText: validateEmail(_email.text),
                             errorStyle: TextStyle(color: Colors.red.shade400),
                             labelText: 'Confirm Password',
@@ -271,18 +273,52 @@ class _SignUp_newState extends State<SignUp_new> {
                                   );
                                 } else {
                                   try {
-                                    UserCredential credential =
-                                        await FIRE_BASE
-                                            .createUserWithEmailAndPassword(
-                                                email: _email.text.trim(),
-                                                password:
-                                                    _password.text.trim());
+                                    UserCredential credential = await FIRE_BASE
+                                        .createUserWithEmailAndPassword(
+                                            email: _email.text.trim(),
+                                            password: _password.text.trim());
                                     if (credential != null) {
                                       addUserDetails(
                                         email: _email.text.trim(),
                                         uid: USER_ID,
                                         fullName: _name.text.trim(),
                                       );
+                                      FirebaseAuth.instance.currentUser
+                                          ?.sendEmailVerification();
+
+                                      // showDialog(
+                                      //     context: context,
+                                      //     builder: (BuildContext context) {
+                                      //       return AlertDialog(
+                                      //         title: Row(
+                                      //           children: [
+                                      //             Text("Verify your Email"),
+                                      //           ],
+                                      //         ),
+                                      //         content: SizedBox(
+                                      //           height: 100,
+                                      //           child: Column(
+                                      //             children: [
+                                      //               isEmailVerified
+                                      //                   ? Text(
+                                      //                       'Your Email is Verified')
+                                      //                   : Text(
+                                      //                       "We have Sent you an email."),
+                                      //               isEmailVerified
+                                      //                   ? Icon(
+                                      //                       Icons
+                                      //                           .verified_outlined,
+                                      //                       size: 50,
+                                      //                     )
+                                      //                   : CircularProgressIndicator(
+                                      //                       color: Colors.black,
+                                      //                     ),
+                                      //             ],
+                                      //           ),
+                                      //         ),
+                                      //       );
+                                      //     });
+
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(

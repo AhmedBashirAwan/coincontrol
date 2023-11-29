@@ -31,9 +31,7 @@ class MyApp extends StatelessWidget {
           //     uid: FirebaseAuth.instance.currentUser!.uid,
           //   );
           // } else {
-          return Dashboard(
-            uid: USER_ID,
-          );
+          return Login();
           // }
         },
       ),
