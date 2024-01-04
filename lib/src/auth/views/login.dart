@@ -56,6 +56,7 @@ class _LoginState extends State<Login> {
     } else if (_pass.text != _confirm.text) {
       return "Both password should be same";
     }
+    return null;
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -85,9 +86,9 @@ class _LoginState extends State<Login> {
                     SizedBox(
                         height: getHeight(context) * 0.15,
                         child: Image.asset("lib/assets/logo.png")),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text('AI Finance Control',
                             style: TextStyle(
                                 fontSize: 40,
@@ -207,7 +208,14 @@ class _LoginState extends State<Login> {
                                     await FIRE_BASE.signInWithEmailAndPassword(
                                         email: _email.text.trim(),
                                         password: _pass.text.trim());
-
+                                if (credentialss.user!.emailVerified) {
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text('Kindly Verify Your Email')),
+                                  );
+                                }
                                 QuerySnapshot<Map<String, dynamic>> data =
                                     await FirebaseFirestore.instance
                                         .collection('userCredentials')
@@ -216,10 +224,7 @@ class _LoginState extends State<Login> {
                                         .get();
 
                                 if (data.docs.first.data()['new_User'] ==
-                                        true &&
-                                    data.docs.first
-                                        .data()
-                                        .containsKey('new_User')) {
+                                    true) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -240,7 +245,8 @@ class _LoginState extends State<Login> {
                                 }
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('$e')),
+                                  const SnackBar(
+                                      content: Text('Enter the Email Again')),
                                 );
                               }
                             })),
@@ -275,21 +281,25 @@ class _LoginState extends State<Login> {
                       ]),
                     ),
                     Links(
-                      onTap: () async {
-                        final googleUser = await GoogleSignIn(
-                          signInOption: SignInOption.games,
-                        ).signIn();
+                      onTap: () {
+                        Future<UserCredential> signInWithGoogle() async {
+                          // Trigger the authentication flow
+                          final GoogleSignInAccount? googleUser =
+                              await GoogleSignIn().signIn();
 
-                        final googleAuth = await googleUser?.authentication;
-                        if (googleAuth != null) {
+                          // Obtain the auth details from the request
+                          final GoogleSignInAuthentication? googleAuth =
+                              await googleUser?.authentication;
+
                           // Create a new credential
                           final credential = GoogleAuthProvider.credential(
-                            accessToken: googleAuth.accessToken,
-                            idToken: googleAuth.idToken,
+                            accessToken: googleAuth?.accessToken,
+                            idToken: googleAuth?.idToken,
                           );
 
                           // Once signed in, return the UserCredential
-                          await FIRE_BASE.signInWithCredential(credential);
+                          return await FirebaseAuth.instance
+                              .signInWithCredential(credential);
                         }
                       },
                       height: getHeight(context) * 0.06,
@@ -305,41 +315,6 @@ class _LoginState extends State<Login> {
                           : Colors.black,
                       text: 'Signin with google',
                     ),
-                    SizedBox(
-                      height: getHeight(context) * 0.01,
-                    ),
-                    Links(
-                      onTap: () async {
-                        Future<UserCredential> signInWithFacebook() async {
-                          // Trigger the sign-in flow
-                          final LoginResult loginResult =
-                              await FacebookAuth.instance.login();
-                          // Create a credential from the access token
-                          final OAuthCredential facebookAuthCredential =
-                              FacebookAuthProvider.credential(
-                                  loginResult.accessToken!.token);
-                          // Once signed in, return the UserCredential
-                          return FIRE_BASE
-                              .signInWithCredential(facebookAuthCredential);
-                        }
-                      },
-                      height: getHeight(context) * 0.06,
-                      radius: 18,
-                      image: SizedBox(
-                          height: getHeight(context) * 0.05,
-                          width: getWidth(context) * 0.06,
-                          child: FittedBox(
-                              child: Image.asset("lib/assets/facebook.png"))),
-                      icon: const Icon(Icons.email_outlined),
-                      backgroundColor: isDarkTheme(context) == true
-                          ? Colors.grey.shade800
-                          : const Color(0xFFCBBCB1),
-                      foregroundColor: isDarkTheme(context) == true
-                          ? Colors.white
-                          : Colors.black,
-                      text: 'Signin with Facebook',
-                    ),
-                 
                   ],
                 ),
               ),

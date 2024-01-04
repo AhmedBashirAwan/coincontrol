@@ -1,5 +1,4 @@
 import 'package:coincontrol/imports.dart';
-import 'package:coincontrol/src/information_forms/components/formsfields.dart';
 
 class InformationForms extends StatefulWidget {
   String uid;

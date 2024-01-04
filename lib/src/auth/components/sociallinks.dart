@@ -8,7 +8,7 @@ class Links extends StatefulWidget {
   final double? radius;
   final double? height;
   final Widget? image;
-  final Function? onTap;
+  final VoidCallback? onTap;
   const Links({
     Key? key,
     this.height,
@@ -39,24 +39,27 @@ class _LinksState extends State<Links> {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              child: widget.image,
-            ),
-            SizedBox(
-              width: getWidth(context) * .03,
-            ),
-            Text(
-              widget.text ?? '',
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF000000),
+        child: InkWell(
+          onTap: widget.onTap,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: widget.image,
               ),
-            ),
-          ],
+              SizedBox(
+                width: getWidth(context) * .03,
+              ),
+              Text(
+                widget.text ?? '',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF000000),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

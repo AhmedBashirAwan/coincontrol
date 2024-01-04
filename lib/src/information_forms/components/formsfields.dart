@@ -18,6 +18,7 @@ class _FormsFieldsState extends State<FormsFields> {
       controller: widget.controller,
       keyboardType: widget.inputType ?? TextInputType.text,
       decoration: InputDecoration(
+        prefix: const Text('Rs. '),
         labelText: widget.label,
         filled: true,
         labelStyle: TextStyle(

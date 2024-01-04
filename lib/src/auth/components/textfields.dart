@@ -1,3 +1,6 @@
+
+// ignore_for_file: must_be_immutable
+
 import 'package:coincontrol/imports.dart';
 
 class Fields extends StatefulWidget {
@@ -40,6 +43,7 @@ class _FieldsState extends State<Fields> {
         child: TextFormField(
           validator: (value) {
             widget.validater;
+            return null;
           },
           controller: widget.controller,
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),

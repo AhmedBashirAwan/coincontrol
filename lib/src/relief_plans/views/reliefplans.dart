@@ -1,7 +1,5 @@
 
 import 'package:coincontrol/imports.dart';
-import 'package:coincontrol/src/relief_plans/controllers/reliefplanscontroller.dart';
-import 'package:coincontrol/src/relief_plans/views/plans_details.dart';
 
 class ReliefPlans extends StatefulWidget {
   const ReliefPlans({super.key});

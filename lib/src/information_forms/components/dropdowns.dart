@@ -1,6 +1,4 @@
 import 'package:coincontrol/imports.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class DropDowns extends StatefulWidget {
   String value;

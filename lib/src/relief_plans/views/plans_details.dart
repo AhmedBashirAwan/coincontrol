@@ -1,6 +1,4 @@
 import 'package:coincontrol/imports.dart';
-import 'package:coincontrol/src/relief_plans/controllers/maps.dart';
-import 'package:coincontrol/src/relief_plans/controllers/reliefplanscontroller.dart';
 
 class PlansDetails extends StatefulWidget {
   int index;

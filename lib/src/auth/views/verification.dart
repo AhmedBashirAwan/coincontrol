@@ -25,8 +25,8 @@ class _VerificationState extends State<Verification> {
             SizedBox(
               height: getHeight(context) * 0.25,
             ),
-            Row(
-              children: const [
+            const Row(
+              children:  [
                 Text('Enter OTP Code',
                     style: TextStyle(
                       fontSize: 36,

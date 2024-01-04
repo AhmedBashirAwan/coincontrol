@@ -74,7 +74,7 @@ class _SignUp_newState extends State<SignUp_new> {
     String? email,
   }) async {
     Map<String, dynamic> payload = {
-      'user_ID': USER_ID,
+      'user_ID': FirebaseAuth.instance.currentUser!.uid,
       'new_User': true,
       'email': email,
       'name': fullName,
@@ -280,12 +280,17 @@ class _SignUp_newState extends State<SignUp_new> {
                                     if (credential != null) {
                                       addUserDetails(
                                         email: _email.text.trim(),
-                                        uid: USER_ID,
+                                        uid: FirebaseAuth.instance.currentUser!.uid,
                                         fullName: _name.text.trim(),
                                       );
                                       FirebaseAuth.instance.currentUser
                                           ?.sendEmailVerification();
-
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                'We have sent an email to ${credential.user!.email}.')),
+                                      );
                                       // showDialog(
                                       //     context: context,
                                       //     builder: (BuildContext context) {
@@ -329,7 +334,9 @@ class _SignUp_newState extends State<SignUp_new> {
                                   } catch (e) {
                                     print(e);
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('$e')),
+                                      const SnackBar(
+                                          content:
+                                              Text('Registeration Failed')),
                                     );
                                   }
                                 }
@@ -382,29 +389,6 @@ class _SignUp_newState extends State<SignUp_new> {
                             ? Colors.white
                             : Colors.black,
                         text: 'Signin with google',
-                      ),
-                      SizedBox(
-                        height: getHeight(context) * 0.01,
-                      ),
-                      Links(
-                        onTap: () {
-                          Authcontroller().facebookAuth();
-                        },
-                        height: getHeight(context) * 0.06,
-                        radius: 18,
-                        image: SizedBox(
-                            height: getHeight(context) * 0.05,
-                            width: getWidth(context) * 0.06,
-                            child: FittedBox(
-                                child: Image.asset("lib/assets/facebook.png"))),
-                        icon: const Icon(Icons.email_outlined),
-                        backgroundColor: isDarkTheme(context) == true
-                            ? Colors.grey.shade800
-                            : const Color(0xFFCBBCB1),
-                        foregroundColor: isDarkTheme(context) == true
-                            ? Colors.white
-                            : Colors.black,
-                        text: 'Signin with Facebook',
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),

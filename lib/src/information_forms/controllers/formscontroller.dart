@@ -5,7 +5,7 @@ class FormsController {
   Future<void> updatingStatus() async {
     QuerySnapshot<Map<String, dynamic>> data = await FIRE_STORE
         .collection('userCredentials')
-        .where('user_ID', isEqualTo: USER_ID)
+        .where('user_ID', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
 
     if (data.docs.isNotEmpty) {
@@ -16,7 +16,7 @@ class FormsController {
           .update({'new_User': false});
     } else {
       // Handle the case where no document is found for the given user ID.
-      print("No document found for user ID: $USER_ID");
+      print("No document found for user ID: $FirebaseAuth.instance.currentUser!.uid");
     }
   }
 

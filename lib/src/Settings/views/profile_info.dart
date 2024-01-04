@@ -1,8 +1,8 @@
+import 'dart:io' as io;
+
 import 'package:coincontrol/imports.dart';
 import 'package:coincontrol/src/Settings/controllers/settings_controller.dart';
-import 'package:coincontrol/src/dashboard/controllers/dashboardController.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PersonalInfo extends StatefulWidget {
   const PersonalInfo({super.key});
@@ -16,8 +16,17 @@ class _PersonalInfoState extends State<PersonalInfo> {
   // bool emailReadyOnly = true;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-
   Map<String, dynamic> credentials = {};
+  XFile? image;
+
+  Future<void> _pickImage(ImageSource source) async {
+    final ImagePicker _picker = ImagePicker();
+    final img = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      image = img;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -66,15 +75,31 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            radius: 40,
-                            child: Text(
-                              data!['name']?[0] ?? 'N/A',
-                              style: const TextStyle(
-                                  fontSize: 28, fontWeight: FontWeight.w500),
-                            ),
-                          ),
+                          InkWell(
+                              onTap: () {
+                                _pickImage(ImageSource.gallery);
+                              },
+                              child: Tooltip(
+                                message: "Edit Image",
+                                child: CircleAvatar(
+                                  backgroundColor: image == null
+                                      ? Colors.grey
+                                      : Colors.transparent,
+                                  radius: 50,
+                                  backgroundImage: image == null
+                                      ? null
+                                      : FileImage(io.File(image!.path)),
+                                  child: image == null
+                                      ? Text(
+                                          data!['name']?[0] ?? 'N/A',
+                                          style: const TextStyle(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
+                                      : null,
+                                ),
+                              )),
                         ],
                       ),
                       SizedBox(
@@ -100,7 +125,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         controller: nameController,
                         readOnly: nameReadyOnly,
                         decoration: InputDecoration(
-                          hintText: data['name'],
+                          hintText: data!['name'],
                           suffixIcon: InkWell(
                             onTap: () {
                               setState(() {

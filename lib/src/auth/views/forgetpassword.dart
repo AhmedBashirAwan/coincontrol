@@ -116,11 +116,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ),
                   onPressed: () async {
                     try {
-                      await FIRE_BASE
-                          .sendPasswordResetEmail(email: _email.text.trim());
+                      await FIRE_BASE.sendPasswordResetEmail(
+                          email: _email.text.trim());
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('$e')),
+                        const SnackBar(
+                            content: Text('Please Enter the Email again')),
                       );
                     }
                   },

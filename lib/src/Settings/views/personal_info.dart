@@ -1,6 +1,4 @@
 import 'package:coincontrol/imports.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class EditPersonal extends StatefulWidget {
   const EditPersonal({super.key});

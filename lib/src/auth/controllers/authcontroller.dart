@@ -1,13 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coincontrol/src/auth/views/signUp.dart';
-import 'package:coincontrol/src/dashboard/views/dashboard.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
 import '../../../imports.dart';
-import '../views/verification.dart';
 
 class Authcontroller {
   FirebaseFirestore firestore = FirebaseFirestore.instance;

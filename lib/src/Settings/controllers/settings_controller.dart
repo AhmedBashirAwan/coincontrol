@@ -5,12 +5,12 @@ class SettingsController {
   Future<Map<String, dynamic>> fetchingUsersCredentials() async {
     QuerySnapshot<Map<String, dynamic>> userData = await FIRE_STORE
         .collection('userCredentials')
-        .where("user_ID", isEqualTo: USER_ID)
+        .where("user_ID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userData.docs.isNotEmpty) {
       return userData.docs.first.data();
     } else {
-      print("No document found for user ID: $USER_ID");
+      print("No document found for user ID: $FirebaseAuth.instance.currentUser!.uid");
       return {};
     }
   }
@@ -29,12 +29,12 @@ class SettingsController {
   Future<Map<String, dynamic>> fetchingPersonalInfo() async {
     QuerySnapshot<Map<String, dynamic>> userData = await FIRE_STORE
         .collection('personal_Info')
-        .where("user_ID", isEqualTo: USER_ID)
+        .where("user_ID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userData.docs.isNotEmpty) {
       return userData.docs.first.data();
     } else {
-      print("No document found for user ID: $USER_ID");
+      print("No document found for user ID: $FirebaseAuth.instance.currentUser!.uid");
       return {};
     }
   }
@@ -53,12 +53,12 @@ class SettingsController {
   Future<Map<String, dynamic>> fetchingFinancialInfo() async {
     QuerySnapshot<Map<String, dynamic>> userData = await FIRE_STORE
         .collection('finance_Info')
-        .where("user_ID", isEqualTo: USER_ID)
+        .where("user_ID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userData.docs.isNotEmpty) {
       return userData.docs.first.data();
     } else {
-      print("No document found for user ID: $USER_ID");
+      print("No document found for user ID: $FirebaseAuth.instance.currentUser!.uid");
       return {};
     }
   }
@@ -72,4 +72,6 @@ class SettingsController {
     QueryDocumentSnapshot<Map<String, dynamic>> document = data.docs.first;
     document.reference.update(payload);
   }
+
+  
 }
