@@ -8,57 +8,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  // method for validating email
-  String? validateEmail(String? value) {
-    const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
-        r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
-        r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
-        r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
-        r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
-        r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
-        r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])';
-    final regex = RegExp(pattern);
-
-    return value!.isNotEmpty && !regex.hasMatch(value)
-        ? 'Enter a valid email address'
-        : null;
-  }
-
-  // method for validating password
-  String? validatePassword(String? value) {
-    if (value!.isEmpty) {
-      return 'Password is required';
-    } else if (value.length < 6) {
-      return 'Password must be at least 8 characters';
-    } else if (value.length > 15) {
-      return 'Password must be less then 15 characters';
-    } else if ((!RegExp(
-            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@!%*?&])[A-Za-z\\d@!%*?&]{8,15}")
-        .hasMatch(_pass.text))) {
-      return 'Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be 6-20 characters long';
-    }
-
-    return null;
-  }
-
-  // method for validating confirm pass
-  String? valiadateConfirmPass(String? value) {
-    if (value!.isEmpty) {
-      return 'Password is required';
-    } else if (value.length < 6) {
-      return 'Password must be at least 8 characters';
-    } else if (value.length > 15) {
-      return 'Password must be less then 15 characters';
-    } else if ((!RegExp(
-            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@!%*?&])[A-Za-z\\d@!%*?&]{8,15}")
-        .hasMatch(_confirm.text))) {
-      return 'Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be 6-20 characters long';
-    } else if (_pass.text != _confirm.text) {
-      return "Both password should be same";
-    }
-    return null;
-  }
-
   final _formKey = GlobalKey<FormState>();
   bool _isNotValidate = false;
   TextEditingController _name = TextEditingController();
@@ -86,14 +35,18 @@ class _LoginState extends State<Login> {
                     SizedBox(
                         height: getHeight(context) * 0.15,
                         child: Image.asset("lib/assets/logo.png")),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('AI Finance Control',
-                            style: TextStyle(
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF4B5648))),
+                        SizedBox(
+                          width: getWidth(context) * 0.8,
+                          child: const Text('AI Finance Control',
+                              style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: 37,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF4B5648))),
+                        ),
                       ],
                     ),
                     SizedBox(
@@ -106,12 +59,10 @@ class _LoginState extends State<Login> {
                       width: getWidth(context) * .2,
                       child: TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: validateEmail,
                         controller: _email,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
                         decoration: InputDecoration(
-                          errorText: validateEmail(_email.text),
                           errorStyle: TextStyle(color: Colors.red.shade400),
                           labelText: 'Email',
                           filled: true,
@@ -132,13 +83,11 @@ class _LoginState extends State<Login> {
                       width: getWidth(context) * .2,
                       child: TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: validatePassword,
                         controller: _pass,
                         obscureText: obscure,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
                         decoration: InputDecoration(
-                          // errorText: validateEmail(_email.text),
                           errorStyle: TextStyle(color: Colors.red.shade400),
                           labelText: 'Password',
                           filled: true,
@@ -204,49 +153,52 @@ class _LoginState extends State<Login> {
                             ),
                             onPressed: () async {
                               try {
-                                UserCredential credentialss =
-                                    await FIRE_BASE.signInWithEmailAndPassword(
+                                UserCredential credentialss = await FirebaseAuth
+                                    .instance
+                                    .signInWithEmailAndPassword(
                                         email: _email.text.trim(),
                                         password: _pass.text.trim());
-                                if (credentialss.user!.emailVerified) {
+                                if (credentialss.user!.emailVerified &&
+                                    FirebaseAuth.instance.currentUser != null) {
+                                  QuerySnapshot<Map<String, dynamic>> data =
+                                      await FirebaseFirestore.instance
+                                          .collection('userCredentials')
+                                          .where('user_ID',
+                                              isEqualTo: credentialss.user!.uid)
+                                          .get();
+
+                                  if (data.docs.first.data()['new_User'] ==
+                                      true) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => InformationForms(
+                                          uid: credentialss.user!.uid,
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Dashboard(
+                                          uid: credentialss.user!.uid,
+                                        ),
+                                      ),
+                                    );
+                                  }
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                        content:
-                                            Text('Kindly Verify Your Email')),
-                                  );
-                                }
-                                QuerySnapshot<Map<String, dynamic>> data =
-                                    await FirebaseFirestore.instance
-                                        .collection('userCredentials')
-                                        .where('user_ID',
-                                            isEqualTo: credentialss.user!.uid)
-                                        .get();
-
-                                if (data.docs.first.data()['new_User'] ==
-                                    true) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => InformationForms(
-                                        uid: credentialss.user!.uid,
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Dashboard(
-                                        uid: credentialss.user!.uid,
-                                      ),
-                                    ),
+                                        content: Text(
+                                            'Kindly Verify Your Email. Through the link we have sent.')),
                                   );
                                 }
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                      content: Text('Enter the Email Again')),
+                                      content: Text(
+                                          'Recheck and enter the correct Email')),
                                 );
                               }
                             })),
@@ -282,24 +234,59 @@ class _LoginState extends State<Login> {
                     ),
                     Links(
                       onTap: () {
-                        Future<UserCredential> signInWithGoogle() async {
-                          // Trigger the authentication flow
-                          final GoogleSignInAccount? googleUser =
-                              await GoogleSignIn().signIn();
+                        Future<UserCredential?> signInWithGoogle() async {
+                          try {
+                            // Trigger the authentication flow
+                            final GoogleSignInAccount? googleUser =
+                                await GoogleSignIn().signIn();
 
-                          // Obtain the auth details from the request
-                          final GoogleSignInAuthentication? googleAuth =
-                              await googleUser?.authentication;
+                            // Obtain the auth details from the request
+                            final GoogleSignInAuthentication? googleAuth =
+                                await googleUser?.authentication;
 
-                          // Create a new credential
-                          final credential = GoogleAuthProvider.credential(
-                            accessToken: googleAuth?.accessToken,
-                            idToken: googleAuth?.idToken,
-                          );
+                            // Create a new credential
+                            final credential = GoogleAuthProvider.credential(
+                              accessToken: googleAuth?.accessToken,
+                              idToken: googleAuth?.idToken,
+                            );
 
-                          // Once signed in, return the UserCredential
-                          return await FirebaseAuth.instance
-                              .signInWithCredential(credential);
+                            // Once signed in, return the UserCredential
+                            UserCredential credentialss = await FirebaseAuth
+                                .instance
+                                .signInWithCredential(credential);
+
+                            // Query Firestore to check if the user is new
+                            QuerySnapshot<Map<String, dynamic>> data =
+                                await FirebaseFirestore.instance
+                                    .collection('userCredentials')
+                                    .where('user_ID',
+                                        isEqualTo: credentialss.user!.uid)
+                                    .get();
+                            if (data.docs.first.data()['new_User'] == true) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => InformationForms(
+                                    uid: credentialss.user!.uid,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Dashboard(
+                                    uid: credentialss.user!.uid,
+                                  ),
+                                ),
+                              );
+                            }
+                            return credentialss; // Return the UserCredential here if needed
+                          } catch (e) {
+                            print('Error signing in with Google: $e');
+                            // Handle the error as needed
+                            return null; // Return null or throw an exception, depending on your error handling strategy
+                          }
                         }
                       },
                       height: getHeight(context) * 0.06,

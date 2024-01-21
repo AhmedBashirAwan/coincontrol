@@ -27,7 +27,6 @@ export 'package:coincontrol/src/auth/controllers/authcontroller.dart';
 export 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 export 'package:google_sign_in/google_sign_in.dart';
 export 'package:coincontrol/src/dashboard/components/drawer.dart';
-export 'package:coincontrol/globals.dart';
 export 'package:coincontrol/src/information_forms/controllers/formscontroller.dart';
 export 'package:coincontrol/src/information_forms/components/formsfields.dart';
 export 'package:coincontrol/src/relief_plans/controllers/reliefplanscontroller.dart';

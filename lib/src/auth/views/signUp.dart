@@ -44,7 +44,7 @@ class _SignUp_newState extends State<SignUp_new> {
     } else if ((!RegExp(
             "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@!%*?&])[A-Za-z\\d@!%*?&]{8,15}")
         .hasMatch(_password.text))) {
-      return 'Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be 6-20 characters long';
+      return 'Password must contain at least one uppercase, \none lowercase letter, one number, one special character, \nand be 6-20 characters long';
     }
 
     return null;
@@ -54,14 +54,6 @@ class _SignUp_newState extends State<SignUp_new> {
   String? valiadateConfirmPass(String? value) {
     if (value!.isEmpty) {
       return 'Password is required';
-    } else if (value.length < 6) {
-      return 'Password must be at least 8 characters';
-    } else if (value.length > 15) {
-      return 'Password must be less then 15 characters';
-    } else if ((!RegExp(
-            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@!%*?&])[A-Za-z\\d@!%*?&]{8,15}")
-        .hasMatch(_confirm.text))) {
-      return 'Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be 6-20 characters long';
     } else if (_confirm.text != _password.text) {
       return "Both password should be same";
     }
@@ -79,7 +71,7 @@ class _SignUp_newState extends State<SignUp_new> {
       'email': email,
       'name': fullName,
     };
-    await FIRE_STORE.collection('userCredentials').add(payload);
+    await FirebaseFirestore.instance.collection('userCredentials').add(payload);
   }
 
   bool _isNotValidate = false;
@@ -100,8 +92,8 @@ class _SignUp_newState extends State<SignUp_new> {
               SizedBox(
                 height: getHeight(context) * 0.07,
               ),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Text('Create Account',
                       style: TextStyle(
                         fontSize: 36,
@@ -198,7 +190,7 @@ class _SignUp_newState extends State<SignUp_new> {
                                 },
                                 child:
                                     const Icon(Icons.remove_red_eye_outlined)),
-                            // errorText: validateEmail(_email.text),
+                            errorText: validateEmail(_email.text),
                             errorStyle: TextStyle(color: Colors.red.shade400),
                             labelText: 'Password',
                             filled: true,
@@ -237,7 +229,7 @@ class _SignUp_newState extends State<SignUp_new> {
                                 },
                                 child:
                                     const Icon(Icons.remove_red_eye_outlined)),
-                            // errorText: validateEmail(_email.text),
+                            errorText: validateEmail(_email.text),
                             errorStyle: TextStyle(color: Colors.red.shade400),
                             labelText: 'Confirm Password',
                             filled: true,
@@ -273,14 +265,15 @@ class _SignUp_newState extends State<SignUp_new> {
                                   );
                                 } else {
                                   try {
-                                    UserCredential credential = await FIRE_BASE
+                                    UserCredential credential = await FirebaseAuth.instance
                                         .createUserWithEmailAndPassword(
                                             email: _email.text.trim(),
                                             password: _password.text.trim());
                                     if (credential != null) {
                                       addUserDetails(
                                         email: _email.text.trim(),
-                                        uid: FirebaseAuth.instance.currentUser!.uid,
+                                        uid: FirebaseAuth
+                                            .instance.currentUser!.uid,
                                         fullName: _name.text.trim(),
                                       );
                                       FirebaseAuth.instance.currentUser
@@ -388,7 +381,7 @@ class _SignUp_newState extends State<SignUp_new> {
                         foregroundColor: isDarkTheme(context) == true
                             ? Colors.white
                             : Colors.black,
-                        text: 'Signin with google',
+                        text: 'Continue with google',
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),

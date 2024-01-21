@@ -116,7 +116,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ),
                   onPressed: () async {
                     try {
-                      await FIRE_BASE.sendPasswordResetEmail(
+                      await FirebaseAuth.instance.sendPasswordResetEmail(
                           email: _email.text.trim());
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(

@@ -3,14 +3,14 @@ import 'package:coincontrol/imports.dart';
 class FormsController {
   //updating user credentials in database
   Future<void> updatingStatus() async {
-    QuerySnapshot<Map<String, dynamic>> data = await FIRE_STORE
+    QuerySnapshot<Map<String, dynamic>> data = await FirebaseFirestore.instance
         .collection('userCredentials')
         .where('user_ID', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
 
     if (data.docs.isNotEmpty) {
       var documentId = data.docs.first.id;
-      await FIRE_STORE
+      await FirebaseFirestore.instance
           .collection('userCredentials')
           .doc(documentId)
           .update({'new_User': false});
@@ -37,7 +37,7 @@ class FormsController {
       String? investmentReturns,
       String? debts}) async {
     Map<String, dynamic> payload = {
-      'user_ID': FIRE_BASE.currentUser!.uid,
+      'user_ID': FirebaseAuth.instance.currentUser!.uid,
       'job': job,
       'family_members': mems,
       'income': income,
@@ -45,7 +45,7 @@ class FormsController {
       'condition': condition,
     };
     Map<String, dynamic> data = {
-      'user_ID': FIRE_BASE.currentUser!.uid,
+      'user_ID': FirebaseAuth.instance.currentUser!.uid,
       'rent': rent,
       'bills': bills,
       'transportation': transportation,
@@ -56,7 +56,7 @@ class FormsController {
       'other_Income': otherIncomes,
       'investment_Returns': investmentReturns,
     };
-    await FIRE_STORE.collection('personal_Info').add(payload);
-    await FIRE_STORE.collection('finance_Info').add(data);
+    await FirebaseFirestore.instance.collection('personal_Info').add(payload);
+    await FirebaseFirestore.instance.collection('finance_Info').add(data);
   }
 }

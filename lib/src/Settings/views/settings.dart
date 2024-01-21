@@ -195,6 +195,8 @@ class _MainSettingsState extends State<MainSettings> {
                         ),
                         const Spacer(),
                         Switch(
+
+                          activeTrackColor: Colors.black,
                           value: silent,
                           onChanged: (value) {
                             setState(() {

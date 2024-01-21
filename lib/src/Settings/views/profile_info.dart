@@ -13,7 +13,6 @@ class PersonalInfo extends StatefulWidget {
 
 class _PersonalInfoState extends State<PersonalInfo> {
   bool nameReadyOnly = true;
-  // bool emailReadyOnly = true;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   Map<String, dynamic> credentials = {};
@@ -203,12 +202,17 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           InkWell(
-                            onTap: () {
-                              FIRE_BASE.sendPasswordResetEmail(
-                                  email: data['email']);
+                            onTap: () async {
+                              await FirebaseAuth.instance
+                                  .sendPasswordResetEmail(email: data['email']);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        'Kindly Change you password. Through the link we have sent you.')),
+                              );
                             },
                             child: const Text(
-                              'Forget Password?',
+                              'Change Password?',
                               style: TextStyle(
                                   // color: isDarkTheme(context)==true?Colors.,
                                   fontSize: 16,

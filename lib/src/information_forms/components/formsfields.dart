@@ -4,8 +4,15 @@ class FormsFields extends StatefulWidget {
   TextEditingController controller;
   TextInputType? inputType;
   String? label;
+  String? prefix;
+  List<TextInputFormatter> formats;
   FormsFields(
-      {super.key, required this.controller, this.label, this.inputType});
+      {super.key,
+      required this.controller,
+      this.label,
+      required this.formats,
+      this.inputType,
+      this.prefix});
 
   @override
   State<FormsFields> createState() => _FormsFieldsState();
@@ -15,10 +22,10 @@ class _FormsFieldsState extends State<FormsFields> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: widget.formats,
       controller: widget.controller,
-      keyboardType: widget.inputType ?? TextInputType.text,
       decoration: InputDecoration(
-        prefix: const Text('Rs. '),
+        prefix: Text("${widget.prefix}"),
         labelText: widget.label,
         filled: true,
         labelStyle: TextStyle(

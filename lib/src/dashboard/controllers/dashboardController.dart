@@ -4,7 +4,7 @@ class DashboardController {
 
   //fetching current users all credentials 
   Future<Map<String, dynamic>> fetchingUsersCredentials() async {
-    QuerySnapshot<Map<String, dynamic>> userData = await FIRE_STORE
+    QuerySnapshot<Map<String, dynamic>> userData = await FirebaseFirestore.instance
         .collection('userCredentials')
         .where("user_ID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();

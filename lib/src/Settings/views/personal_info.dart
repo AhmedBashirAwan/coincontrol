@@ -41,8 +41,8 @@ class _EditPersonalState extends State<EditPersonal> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              Row(
-                children: const [
+              const Row(
+                children:  [
                   Text(
                     "Job Description",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
@@ -129,8 +129,8 @@ class _EditPersonalState extends State<EditPersonal> {
                   Expanded(
                     child: Column(
                       children: [
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Text(
                               "Monthly Income",
                               style: TextStyle(

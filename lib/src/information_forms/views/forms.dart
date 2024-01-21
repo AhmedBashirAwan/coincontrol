@@ -49,7 +49,7 @@ class InformationStateForms extends State<InformationForms> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => Dashboard(
-                        uid: FirebaseAuth.instance.currentUser!.uid,
+                        uid: FirebaseAuth.instance.currentUser?.uid,
                       ),
                     ),
                   );
@@ -130,29 +130,47 @@ class InformationStateForms extends State<InformationForms> {
                   height: 10,
                 ),
                 FormsFields(
+                  prefix: '',
                   controller: job,
                   label: "Job Description",
+                  formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]+|\s'))
+                  ],
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 FormsFields(
+                  prefix: '',
                   controller: familyMembers,
                   label: "Family Members",
-                  inputType: TextInputType.number,
+                  formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 FormsFields(
+                  prefix: 'Rs. ',
                   controller: income,
+                  formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   label: "Mothly Income",
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 FormsFields(
+                  prefix: 'Rs. ',
                   controller: savings,
+                  formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   label: "Mothly Savings",
                 ),
                 const SizedBox(
@@ -189,7 +207,6 @@ class InformationStateForms extends State<InformationForms> {
                       ),
                     ],
                   ),
-                
                 ),
               ],
             )),
@@ -204,8 +221,12 @@ class InformationStateForms extends State<InformationForms> {
                   const SizedBox(
                     height: 10,
                   ),
-
                   FormsFields(
+                    formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                    prefix: 'Rs. ',
                     controller: rent,
                     label: "Rent",
                   ),
@@ -213,6 +234,11 @@ class InformationStateForms extends State<InformationForms> {
                     height: 10,
                   ),
                   FormsFields(
+                    formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                    prefix: 'Rs. ',
                     controller: bills,
                     label: "Bills",
                   ),
@@ -220,6 +246,11 @@ class InformationStateForms extends State<InformationForms> {
                     height: 10,
                   ),
                   FormsFields(
+                    formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                    prefix: 'Rs. ',
                     controller: transportation,
                     label: "Traportation Cost",
                   ),
@@ -227,6 +258,11 @@ class InformationStateForms extends State<InformationForms> {
                     height: 10,
                   ),
                   FormsFields(
+                    prefix: 'Rs. ',
+                    formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                     controller: groceries,
                     label: "Groceries",
                   ),
@@ -234,6 +270,11 @@ class InformationStateForms extends State<InformationForms> {
                     height: 10,
                   ),
                   FormsFields(
+                    prefix: 'Rs. ',
+                    formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                     controller: education,
                     label: "Education",
                   ),
@@ -255,6 +296,11 @@ class InformationStateForms extends State<InformationForms> {
                     height: 10,
                   ),
                   FormsFields(
+                    formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                    prefix: 'Rs. ',
                     controller: others,
                     label: "Others",
                   ),
@@ -271,6 +317,11 @@ class InformationStateForms extends State<InformationForms> {
                   height: 10,
                 ),
                 FormsFields(
+                  prefix: 'Rs. ',
+                  formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   controller: otherIncome,
                   label: "Other Income",
                 ),
@@ -278,6 +329,11 @@ class InformationStateForms extends State<InformationForms> {
                   height: 10,
                 ),
                 FormsFields(
+                  prefix: 'Rs. ',
+                  formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   controller: investmentReturn,
                   label: "Investment Returns",
                 ),
@@ -285,7 +341,12 @@ class InformationStateForms extends State<InformationForms> {
                   height: 10,
                 ),
                 FormsFields(
+                  prefix: 'Rs. ',
                   controller: debt,
+                  formats: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   label: "Debts",
                 ),
               ],
