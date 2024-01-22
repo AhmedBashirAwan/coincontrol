@@ -4,8 +4,8 @@ import 'package:coincontrol/src/customer_support/views/customer_support.dart';
 import '../components/budgetcreationpopup.dart';
 
 class Dashboard extends StatefulWidget {
-  String? uid;
-  Dashboard({super.key, required this.uid});
+ final String? uid;
+ const Dashboard({super.key, required this.uid});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -24,7 +24,6 @@ class _DashboardState extends State<Dashboard> {
 
   void initializeCredentials() async {
     credentials = await DashboardController().fetchingUsersCredentials();
-    // TODO: Add any additional logic or state updates based on the fetched credentials
   }
 
   @override
@@ -296,7 +295,7 @@ class _DashboardState extends State<Dashboard> {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
-          return CustomPopUP();
+          return const CustomPopUP();
         });
   }
 }

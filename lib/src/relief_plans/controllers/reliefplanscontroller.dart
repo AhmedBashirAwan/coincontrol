@@ -7,7 +7,7 @@ class ReliefPlansControllers {
     QuerySnapshot<Map<String, dynamic>> data =
         await FirebaseFirestore.instance.collection('relief_Plans').get();
     for (QueryDocumentSnapshot<Map<String, dynamic>> document in data.docs) {
-      lists.add(document.data()!);
+      lists.add(document.data());
     }
     return lists;
   }
@@ -27,7 +27,7 @@ class ReliefPlansControllers {
         .where('user_ID', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
     for (QueryDocumentSnapshot<Map<String, dynamic>> document in data.docs) {
-      lists.add(document.data()!);
+      lists.add(document.data());
     }
     return lists;
   }

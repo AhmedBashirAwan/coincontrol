@@ -14,7 +14,7 @@ class _CustomerSupportState extends State<CustomerSupport> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: LIGHT_PRI_COLOR,
-      body: SafeArea(
+      body: const SafeArea(
           child: Center(
         child: Text('Customer care is coming soon...'),
       )),

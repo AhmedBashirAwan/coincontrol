@@ -52,136 +52,134 @@ class _MainSettingsState extends State<MainSettings> {
                 bool neya = snapshot.data!['new_User'];
                 return Column(
                   children: [
-                    Container(
-                      child: Column(
-                        children: [
-                          const Row(
+                    Column(
+                      children: [
+                        const Row(
+                          children: [
+                            Text(
+                              'Account',
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          child: Row(
                             children: [
-                              Text(
-                                'Account',
+                              const Text(
+                                'Edit profile',
                                 style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.w500),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w400),
                               ),
+                              const Spacer(),
+                              InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const PersonalInfo(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 23,
+                                  ))
                             ],
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  'Edit profile',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                const Spacer(),
-                                InkWell(
-                                    onTap: () {
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          child: Row(
+                            children: [
+                              const Text(
+                                'Personal Information',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              const Spacer(),
+                              InkWell(
+                                  onTap: () {
+                                    if (neya == true) {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const PersonalInfo(),
+                                              InformationForms(
+                                            uid: FirebaseAuth
+                                                .instance.currentUser!.uid,
+                                          ),
                                         ),
                                       );
-                                    },
-                                    child: const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 23,
-                                    ))
-                              ],
-                            ),
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const EditPersonal(),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: const Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 23,
+                                  ))
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  'Personal Information',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                const Spacer(),
-                                InkWell(
-                                    onTap: () {
-                                      if (neya == true) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                InformationForms(
-                                              uid: FirebaseAuth
-                                                  .instance.currentUser!.uid,
-                                            ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          child: Row(
+                            children: [
+                              const Text(
+                                'Expenses',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              const Spacer(),
+                              InkWell(
+                                  onTap: () {
+                                    if (neya == true) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              InformationForms(
+                                            uid: FirebaseAuth
+                                                .instance.currentUser!.uid,
                                           ),
-                                        );
-                                      } else {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const EditPersonal(),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    child: const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 23,
-                                    ))
-                              ],
-                            ),
+                                        ),
+                                      );
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Expense(),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: const Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 23,
+                                  ))
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  'Expenses',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                const Spacer(),
-                                InkWell(
-                                    onTap: () {
-                                      if (neya == true) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                InformationForms(
-                                              uid: FirebaseAuth
-                                                  .instance.currentUser!.uid,
-                                            ),
-                                          ),
-                                        );
-                                      } else {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Expense(),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    child: const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 23,
-                                    ))
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 10,

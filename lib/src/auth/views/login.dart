@@ -8,13 +8,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
-  bool _isNotValidate = false;
-  TextEditingController _name = TextEditingController();
-  TextEditingController _email = TextEditingController();
-  TextEditingController _pass = TextEditingController();
-  TextEditingController _confirm = TextEditingController();
-
+  bool isNotValidate = false;
+ final TextEditingController _email = TextEditingController();
+ final TextEditingController _pass = TextEditingController();
   bool obscure = true;
 
   @override

@@ -1,9 +1,9 @@
 import 'package:coincontrol/imports.dart';
 
 class DropDowns extends StatefulWidget {
-  String value;
-  Function? onChange;
-  DropDowns({super.key, required this.value, this.onChange});
+ final String value;
+ final Function? onChange;
+ const DropDowns({super.key, required this.value, this.onChange});
 
   @override
   State<DropDowns> createState() => _DropDownsState();

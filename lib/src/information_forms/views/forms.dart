@@ -1,8 +1,9 @@
 import 'package:coincontrol/imports.dart';
+import 'package:easy_autocomplete/easy_autocomplete.dart';
 
 class InformationForms extends StatefulWidget {
-  String uid;
-  InformationForms({super.key, required this.uid});
+ final String uid;
+ const InformationForms({super.key, required this.uid});
 
   @override
   State<InformationForms> createState() => InformationStateForms();
@@ -99,7 +100,6 @@ class InformationStateForms extends State<InformationForms> {
                           ),
                         ),
                       );
-                      print('Completed');
                     } else {
                       setState(() => currentSteps += 1);
                     }
@@ -119,6 +119,38 @@ class InformationStateForms extends State<InformationForms> {
     );
   }
 
+  List<String> suggestions = [
+    'Doctor',
+    'Software Developer',
+    'Salesman',
+    'Businessman',
+    'Teacher',
+    'Nurse',
+    'Mechanical Engineer',
+    'Electrician',
+    'Chef',
+    'Graphic Designer',
+    'Web Developer',
+    'Financial Analyst',
+    'Marketing Specialist',
+    'Human Resources Manager',
+    'Customer Support Representative',
+    'Data Scientist',
+    'Network Administrator',
+    'Quality Assurance Tester',
+    'Project Manager',
+    'Systems Administrator',
+    'IT Support Specialist',
+    'Operations Manager',
+    'Accountant',
+    'Research Scientist',
+    'Legal Assistant',
+    'Photographer',
+    'Social Media Manager',
+    'Event Planner',
+    'Fitness Trainer',
+  ];
+
   List<Step> getStep() => [
         Step(
             state: currentSteps > 0 ? StepState.complete : StepState.indexed,
@@ -129,14 +161,33 @@ class InformationStateForms extends State<InformationForms> {
                 const SizedBox(
                   height: 10,
                 ),
-                FormsFields(
-                  prefix: '',
+                EasyAutocomplete(
                   controller: job,
-                  label: "Job Description",
-                  formats: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]+|\s'))
-                  ],
+                  suggestions: suggestions,
+                  decoration: InputDecoration(
+                    labelText: "Job Description",
+                    filled: true,
+                    labelStyle: TextStyle(
+                        color: isDarkTheme(context) == true
+                            ? Colors.white
+                            : Colors.black),
+                    fillColor: isDarkTheme(context) == true
+                        ? Colors.black54
+                        : Colors.grey[300],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
                 ),
+                // FormsFields(
+                //   prefix: '',
+                //   controller: job,
+                //   label: "Job Description",
+                //   formats: [
+                //     FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]+|\s'))
+                //   ],
+                // ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -223,9 +274,9 @@ class InformationStateForms extends State<InformationForms> {
                   ),
                   FormsFields(
                     formats: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     prefix: 'Rs. ',
                     controller: rent,
                     label: "Rent",
@@ -235,9 +286,9 @@ class InformationStateForms extends State<InformationForms> {
                   ),
                   FormsFields(
                     formats: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     prefix: 'Rs. ',
                     controller: bills,
                     label: "Bills",
@@ -247,9 +298,9 @@ class InformationStateForms extends State<InformationForms> {
                   ),
                   FormsFields(
                     formats: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     prefix: 'Rs. ',
                     controller: transportation,
                     label: "Traportation Cost",
@@ -260,9 +311,9 @@ class InformationStateForms extends State<InformationForms> {
                   FormsFields(
                     prefix: 'Rs. ',
                     formats: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     controller: groceries,
                     label: "Groceries",
                   ),
@@ -272,9 +323,9 @@ class InformationStateForms extends State<InformationForms> {
                   FormsFields(
                     prefix: 'Rs. ',
                     formats: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     controller: education,
                     label: "Education",
                   ),
@@ -297,9 +348,9 @@ class InformationStateForms extends State<InformationForms> {
                   ),
                   FormsFields(
                     formats: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     prefix: 'Rs. ',
                     controller: others,
                     label: "Others",

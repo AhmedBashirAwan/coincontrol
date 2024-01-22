@@ -19,11 +19,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
   XFile? image;
 
   Future<void> _pickImage(ImageSource source) async {
-    final ImagePicker _picker = ImagePicker();
-    final img = await _picker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final img = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       image = img;
     });
+    
   }
 
   @override
@@ -254,4 +255,5 @@ class _PersonalInfoState extends State<PersonalInfo> {
       )),
     );
   }
+  
 }

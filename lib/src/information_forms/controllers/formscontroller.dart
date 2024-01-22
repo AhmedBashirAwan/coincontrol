@@ -16,7 +16,8 @@ class FormsController {
           .update({'new_User': false});
     } else {
       // Handle the case where no document is found for the given user ID.
-      print("No document found for user ID: $FirebaseAuth.instance.currentUser!.uid");
+      print(
+          "No document found for user ID: $FirebaseAuth.instance.currentUser!.uid");
     }
   }
 
@@ -43,6 +44,9 @@ class FormsController {
       'income': income,
       'savings': savings,
       'condition': condition,
+      'debts': debts,
+      'other_Income': otherIncomes,
+      'investment_Returns': investmentReturns,
     };
     Map<String, dynamic> data = {
       'user_ID': FirebaseAuth.instance.currentUser!.uid,
@@ -52,9 +56,6 @@ class FormsController {
       'groceries': groceries,
       'education': education,
       'others': others,
-      'debts': debts,
-      'other_Income': otherIncomes,
-      'investment_Returns': investmentReturns,
     };
     await FirebaseFirestore.instance.collection('personal_Info').add(payload);
     await FirebaseFirestore.instance.collection('finance_Info').add(data);

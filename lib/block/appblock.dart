@@ -38,13 +38,13 @@ class ApplicationBloc extends ChangeNotifier {
           checkboxTheme: CheckboxThemeData(
               checkColor: MaterialStateProperty.all(LIGHT_COLOR)),
           floatingActionButtonTheme:
-              FloatingActionButtonThemeData(
+              const FloatingActionButtonThemeData(
                 // backgroundColor: LIGHT_BODY_COLOR
                 ),
-          colorScheme: ColorScheme.dark(
+          colorScheme: const ColorScheme.dark(
               // background: DARK_BG_COLOR, primary: PRIMARY_COLOR
               ),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             surfaceTintColor: Colors.transparent,
             // backgroundColor: DARK_CARD_COLOR,
           ));

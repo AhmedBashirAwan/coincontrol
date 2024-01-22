@@ -1,12 +1,12 @@
 import 'package:coincontrol/imports.dart';
 
 class FormsFields extends StatefulWidget {
-  TextEditingController controller;
-  TextInputType? inputType;
-  String? label;
-  String? prefix;
-  List<TextInputFormatter> formats;
-  FormsFields(
+ final TextEditingController controller;
+ final TextInputType? inputType;
+ final String? label;
+ final String? prefix;
+ final List<TextInputFormatter> formats;
+ const FormsFields(
       {super.key,
       required this.controller,
       this.label,
@@ -22,6 +22,7 @@ class _FormsFieldsState extends State<FormsFields> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       inputFormatters: widget.formats,
       controller: widget.controller,
       decoration: InputDecoration(

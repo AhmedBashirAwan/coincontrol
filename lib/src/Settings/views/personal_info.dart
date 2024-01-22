@@ -1,4 +1,5 @@
 import 'package:coincontrol/imports.dart';
+import 'package:coincontrol/src/Settings/controllers/settings_controller.dart';
 
 class EditPersonal extends StatefulWidget {
   const EditPersonal({super.key});
@@ -12,6 +13,12 @@ class _EditPersonalState extends State<EditPersonal> {
   bool jobDes = true;
   bool monthlyIncome = true;
   bool monthlySavingd = true;
+  final TextEditingController _job = TextEditingController();
+  final TextEditingController _income = TextEditingController();
+  final TextEditingController _savings = TextEditingController();
+  final TextEditingController _others = TextEditingController();
+  final TextEditingController _returns = TextEditingController();
+  final TextEditingController _debts = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,368 +46,394 @@ class _EditPersonalState extends State<EditPersonal> {
           child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              const Row(
-                children:  [
-                  Text(
-                    "Job Description",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-              TextFormField(
-                // controller: nameController,
-                readOnly: jobDes,
-                decoration: InputDecoration(
-                  // hintText: credentials['name'],
-                  suffixIcon: InkWell(
-                    onTap: () {
-                      setState(() {
-                        jobDes = false;
-                      });
-                    },
-                    child: const Icon(
-                      Icons.edit,
-                      size: 20,
-                    ),
-                  ),
-                  filled: true,
-                  labelStyle: TextStyle(
-                      color: isDarkTheme(context) == true
-                          ? Colors.white
-                          : Colors.black),
-                  fillColor: isDarkTheme(context) == true
-                      ? Colors.black54
-                      : Colors.grey[300],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              // Row(
-              //   children: const [
-              //     Text(
-              //       "Family Members",
-              //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-              //     ),
-              //   ],
-              // ),
-              // TextFormField(
-              //   // controller: nameController,
-              //   // readOnly: nameReadyOnly,
-              //   decoration: InputDecoration(
-              //     // hintText: credentials['name'],
-              //     suffixIcon: InkWell(
-              //       onTap: () {
-              //         setState(() {
-              //           // nameReadyOnly = false;
-              //         });
-              //       },
-              //       child: const Icon(
-              //         Icons.edit,
-              //         size: 20,
-              //       ),
-              //     ),
-              //     filled: true,
-              //     labelStyle: TextStyle(
-              //         color: isDarkTheme(context) == true
-              //             ? Colors.white
-              //             : Colors.black),
-              //     fillColor: isDarkTheme(context) == true
-              //         ? Colors.black54
-              //         : Colors.grey[300],
-              //     border: OutlineInputBorder(
-              //       borderRadius: BorderRadius.circular(30),
-              //       borderSide: BorderSide.none,
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
+          child: FutureBuilder(
+            future: SettingsController().fetchingPersonalInfo(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                Map<String, dynamic>? data = snapshot.data;
+                return Column(
+                  children: [
+                    const Row(
                       children: [
-                        const Row(
-                          children: [
-                            Text(
-                              "Monthly Income",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                        TextFormField(
-                          // controller: nameController,
-                          readOnly: monthlyIncome,
-                          decoration: InputDecoration(
-                            // hintText: credentials['name'],
-                            suffixIcon: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  monthlyIncome = false;
-                                });
-                              },
-                              child: const Icon(
-                                Icons.edit,
-                                size: 20,
-                              ),
-                            ),
-                            filled: true,
-                            labelStyle: TextStyle(
-                                color: isDarkTheme(context) == true
-                                    ? Colors.white
-                                    : Colors.black),
-                            fillColor: isDarkTheme(context) == true
-                                ? Colors.black54
-                                : Colors.grey[300],
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
+                        Text(
+                          "Job Description",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Row(
-                          children: const [
-                            Text(
-                              "Monthly Savings",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500),
-                            ),
-                          ],
+                    TextFormField(
+                      controller: _job,
+                      readOnly: jobDes,
+                      decoration: InputDecoration(
+                        hintText: data!['job'],
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            setState(() {
+                              jobDes = false;
+                            });
+                          },
+                          child: const Icon(
+                            Icons.edit,
+                            size: 20,
+                          ),
                         ),
-                        TextFormField(
-                          // controller: nameController,
-                          readOnly: monthlySavingd,
-                          decoration: InputDecoration(
-                            // hintText: credentials['name'],
-                            suffixIcon: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  monthlySavingd = false;
-                                });
-                              },
-                              child: const Icon(
-                                Icons.edit,
-                                size: 20,
+                        filled: true,
+                        labelStyle: TextStyle(
+                            color: isDarkTheme(context) == true
+                                ? Colors.white
+                                : Colors.black),
+                        fillColor: isDarkTheme(context) == true
+                            ? Colors.black54
+                            : Colors.grey[300],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    // Row(
+                    //   children: const [
+                    //     Text(
+                    //       "Family Members",
+                    //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    //     ),
+                    //   ],
+                    // ),
+                    // TextFormField(
+                    //   // controller: nameController,
+                    //   // readOnly: nameReadyOnly,
+                    //   decoration: InputDecoration(
+                    //     // hintText: credentials['name'],
+                    //     suffixIcon: InkWell(
+                    //       onTap: () {
+                    //         setState(() {
+                    //           // nameReadyOnly = false;
+                    //         });
+                    //       },
+                    //       child: const Icon(
+                    //         Icons.edit,
+                    //         size: 20,
+                    //       ),
+                    //     ),
+                    //     filled: true,
+                    //     labelStyle: TextStyle(
+                    //         color: isDarkTheme(context) == true
+                    //             ? Colors.white
+                    //             : Colors.black),
+                    //     fillColor: isDarkTheme(context) == true
+                    //         ? Colors.black54
+                    //         : Colors.grey[300],
+                    //     border: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(30),
+                    //       borderSide: BorderSide.none,
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              const Row(
+                                children: [
+                                  Text(
+                                    "Monthly Income",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
                               ),
-                            ),
-                            filled: true,
-                            labelStyle: TextStyle(
-                                color: isDarkTheme(context) == true
-                                    ? Colors.white
-                                    : Colors.black),
-                            fillColor: isDarkTheme(context) == true
-                                ? Colors.black54
-                                : Colors.grey[300],
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide.none,
-                            ),
+                              TextFormField(
+                                controller: _income,
+                                readOnly: monthlyIncome,
+                                decoration: InputDecoration(
+                                  hintText: data['income'],
+                                  suffixIcon: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        monthlyIncome = false;
+                                      });
+                                    },
+                                    child: const Icon(
+                                      Icons.edit,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  filled: true,
+                                  labelStyle: TextStyle(
+                                      color: isDarkTheme(context) == true
+                                          ? Colors.white
+                                          : Colors.black),
+                                  fillColor: isDarkTheme(context) == true
+                                      ? Colors.black54
+                                      : Colors.grey[300],
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              const Row(
+                                children: [
+                                  Text(
+                                    "Monthly Savings",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                              TextFormField(
+                                controller: _savings,
+                                readOnly: monthlySavingd,
+                                decoration: InputDecoration(
+                                  hintText: data['savings'],
+                                  suffixIcon: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        monthlySavingd = false;
+                                      });
+                                    },
+                                    child: const Icon(
+                                      Icons.edit,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  filled: true,
+                                  labelStyle: TextStyle(
+                                      color: isDarkTheme(context) == true
+                                          ? Colors.white
+                                          : Colors.black),
+                                  fillColor: isDarkTheme(context) == true
+                                      ? Colors.black54
+                                      : Colors.grey[300],
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-
-              Row(
-                children: const [
-                  Text(
-                    "Other incomes",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-              TextFormField(
-                // controller: nameController,
-                readOnly: monthlySavingd,
-                decoration: InputDecoration(
-                  // hintText: credentials['name'],
-                  suffixIcon: InkWell(
-                    onTap: () {
-                      setState(() {
-                        monthlySavingd = false;
-                      });
-                    },
-                    child: const Icon(
-                      Icons.edit,
-                      size: 20,
-                    ),
-                  ),
-                  filled: true,
-                  labelStyle: TextStyle(
-                      color: isDarkTheme(context) == true
-                          ? Colors.white
-                          : Colors.black),
-                  fillColor: isDarkTheme(context) == true
-                      ? Colors.black54
-                      : Colors.grey[300],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-
-              Row(
-                children: const [
-                  Text(
-                    "Investment Return",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-              TextFormField(
-                // controller: nameController,
-                readOnly: monthlySavingd,
-                decoration: InputDecoration(
-                  // hintText: credentials['name'],
-                  suffixIcon: InkWell(
-                    onTap: () {
-                      setState(() {
-                        monthlySavingd = false;
-                      });
-                    },
-                    child: const Icon(
-                      Icons.edit,
-                      size: 20,
-                    ),
-                  ),
-                  filled: true,
-                  labelStyle: TextStyle(
-                      color: isDarkTheme(context) == true
-                          ? Colors.white
-                          : Colors.black),
-                  fillColor: isDarkTheme(context) == true
-                      ? Colors.black54
-                      : Colors.grey[300],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-
-              Row(
-                children: const [
-                  Text(
-                    "Debts Return",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-              TextFormField(
-                // controller: nameController,
-                readOnly: monthlySavingd,
-                decoration: InputDecoration(
-                  // hintText: credentials['name'],
-                  suffixIcon: InkWell(
-                    onTap: () {
-                      setState(() {
-                        monthlySavingd = false;
-                      });
-                    },
-                    child: const Icon(
-                      Icons.edit,
-                      size: 20,
-                    ),
-                  ),
-                  filled: true,
-                  labelStyle: TextStyle(
-                      color: isDarkTheme(context) == true
-                          ? Colors.white
-                          : Colors.black),
-                  fillColor: isDarkTheme(context) == true
-                      ? Colors.black54
-                      : Colors.grey[300],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-
-              Row(
-                children: [
-                  const Text(
-                    'Living Condition  :',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-                  ),
-                  const Spacer(),
-                  DropdownButton<String>(
-                    value: dropdownValue,
-                    items: <String>['Luxury', 'Good', 'Average', 'Low']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w400),
+                    const Row(
+                      children: [
+                        Text(
+                          "Other incomes",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
                         ),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownValue = newValue!;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: getHeight(context) * 0.04,
-              ),
-              SizedBox(
-                width: getWidth(context) * 0.4,
-                child: CustomElevatedBtn(
-                  elevation: 0,
-                  height: getHeight(context) * 0.06,
-                  radius: 18,
-                  foregroundColor: LIGHT_COLOR,
-                  backgroundColor: LIGHT_SEC_COLOR,
-                  child: const Text(
-                    'Update',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  onPressed: () async {},
-                ),
-              )
-            ],
+                      ],
+                    ),
+                    TextFormField(
+                      controller: _others,
+                      readOnly: monthlySavingd,
+                      decoration: InputDecoration(
+                        hintText: data['other_Income'],
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            setState(() {
+                              monthlySavingd = false;
+                            });
+                          },
+                          child: const Icon(
+                            Icons.edit,
+                            size: 20,
+                          ),
+                        ),
+                        filled: true,
+                        labelStyle: TextStyle(
+                            color: isDarkTheme(context) == true
+                                ? Colors.white
+                                : Colors.black),
+                        fillColor: isDarkTheme(context) == true
+                            ? Colors.black54
+                            : Colors.grey[300],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Row(
+                      children: [
+                        Text(
+                          "Investment Return",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                    TextFormField(
+                      controller: _returns,
+                      readOnly: monthlySavingd,
+                      decoration: InputDecoration(
+                        hintText: data['investment_Returns'],
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            setState(() {
+                              monthlySavingd = false;
+                            });
+                          },
+                          child: const Icon(
+                            Icons.edit,
+                            size: 20,
+                          ),
+                        ),
+                        filled: true,
+                        labelStyle: TextStyle(
+                            color: isDarkTheme(context) == true
+                                ? Colors.white
+                                : Colors.black),
+                        fillColor: isDarkTheme(context) == true
+                            ? Colors.black54
+                            : Colors.grey[300],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Row(
+                      children: [
+                        Text(
+                          "Debts Return",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                    TextFormField(
+                      controller: _debts,
+                      readOnly: monthlySavingd,
+                      decoration: InputDecoration(
+                        hintText: data['debts'],
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            setState(() {
+                              monthlySavingd = false;
+                            });
+                          },
+                          child: const Icon(
+                            Icons.edit,
+                            size: 20,
+                          ),
+                        ),
+                        filled: true,
+                        labelStyle: TextStyle(
+                            color: isDarkTheme(context) == true
+                                ? Colors.white
+                                : Colors.black),
+                        fillColor: isDarkTheme(context) == true
+                            ? Colors.black54
+                            : Colors.grey[300],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          'Living Condition  :',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w400),
+                        ),
+                        const Spacer(),
+                        DropdownButton<String>(
+                          value: dropdownValue,
+                          items: <String>['Luxury', 'Good', 'Average', 'Low']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w400),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValue = newValue!;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: getHeight(context) * 0.04,
+                    ),
+                    SizedBox(
+                      width: getWidth(context) * 0.4,
+                      child: CustomElevatedBtn(
+                        elevation: 0,
+                        height: getHeight(context) * 0.06,
+                        radius: 18,
+                        foregroundColor: LIGHT_COLOR,
+                        backgroundColor: LIGHT_SEC_COLOR,
+                        child: const Text(
+                          'Update',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        onPressed: () async {
+                          Map<String, dynamic> payload = {
+                            'user_ID': FirebaseAuth.instance.currentUser!.uid,
+                            'job': _job,
+                            'income': _income,
+                            'savings': _savings,
+                            'condition': dropdownValue,
+                            'debts': _debts,
+                            'other_Income': _others,
+                            'investment_Returns': _returns,
+                          };
+                          SettingsController().editingPersonalInfo(payload);
+                        },
+                      ),
+                    )
+                  ],
+                );
+              }
+            },
           ),
         ),
       )),

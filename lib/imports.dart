@@ -6,7 +6,6 @@ export 'block/appblock.dart';
 export 'firebase_options.dart';
 export 'package:coincontrol/src/auth/views/forgetpassword.dart';
 export 'package:coincontrol/src/auth/views/signUp.dart';
-export 'package:coincontrol/src/auth/views/verification.dart';
 export 'package:coincontrol/src/dashboard/views/dashboard.dart';
 export 'package:coincontrol/src/information_forms/views/forms.dart';
 export 'package:coincontrol/src/relief_plans/views/reliefplans.dart';

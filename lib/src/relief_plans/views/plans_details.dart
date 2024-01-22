@@ -1,4 +1,5 @@
 import 'package:coincontrol/imports.dart';
+import 'package:flutter/cupertino.dart';
 
 class PlansDetails extends StatefulWidget {
   int index;
@@ -18,7 +19,53 @@ class _PlansDetailsState extends State<PlansDetails> {
       appBar: AppBar(
         leading: InkWell(
             onTap: () {
-              Navigator.pop(context);
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => CupertinoAlertDialog(
+                  title: const Text("Alert"),
+                  content: const Text("Have You Applied In this Program?"),
+                  actions: [
+                    CupertinoDialogAction(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ReliefPlans(),
+                            ),
+                          );
+                        },
+                        isDefaultAction: true,
+                        child: const Text(
+                          "No",
+                          style: TextStyle(color: Colors.black),
+                        )),
+                    CupertinoDialogAction(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Map<String, dynamic> pla = {
+                            'user_ID': FirebaseAuth.instance.currentUser!.uid,
+                            'imageURL': widget.plan['imageURL'],
+                            'title': widget.plan['title'],
+                            'link': widget.plan['applied'],
+                            'applied': true,
+                            'description': widget.plan['description']
+                          };
+                          ReliefPlansControllers().applyReliefs(pla);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ReliefPlans(),
+                            ),
+                          );
+                        },
+                        isDefaultAction: true,
+                        child: Text(
+                          "Yess",
+                          style: TextStyle(color: Colors.blue.shade900),
+                        )),
+                  ],
+                ),
+              );
             },
             child: const Icon(
               Icons.arrow_back,
@@ -39,7 +86,7 @@ class _PlansDetailsState extends State<PlansDetails> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Container(
+            SizedBox(
               // color: Colors.amber,
               height: getHeight(context) * 0.3,
               child: Image.network(widget.plan['imageURL']),
@@ -71,34 +118,24 @@ class _PlansDetailsState extends State<PlansDetails> {
                 ),
               ],
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: getWidth(context) * 0.3,
-                  child: CustomElevatedBtn(
-                    height: getHeight(context) * 0.03,
-                    // radius: 18,
-                    foregroundColor: LIGHT_COLOR,
-                    backgroundColor: LIGHT_SEC_COLOR,
-                    child: const Text(
-                      'Applied',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    onPressed: () async {
-                      Map<String, dynamic> pla = {
-                        'user_ID': FirebaseAuth.instance.currentUser!.uid,
-                        'imageURL': widget.plan['imageURL'],
-                        'title': widget.plan['title'],
-                        'link': widget.plan['applied'],
-                        'applied': true,
-                        'description': widget.plan['description']
-                      };
-                      ReliefPlansControllers().applyReliefs(pla);
-                    },
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     SizedBox(
+            //       width: getWidth(context) * 0.3,
+            //       child: CustomElevatedBtn(
+            //         height: getHeight(context) * 0.03,
+            //         // radius: 18,
+            //         foregroundColor: LIGHT_COLOR,
+            //         backgroundColor: LIGHT_SEC_COLOR,
+            //         child: const Text(
+            //           'Applied',
+            //           style: TextStyle(fontSize: 18),
+            //         ),
+            //         onPressed: () async {},
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       )),

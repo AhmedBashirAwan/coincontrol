@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../imports.dart';
 
 class CustomPopUP extends StatefulWidget {
-  CustomPopUP({
+ const CustomPopUP({
     super.key,
   });
 

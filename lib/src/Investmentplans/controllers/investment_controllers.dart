@@ -6,7 +6,7 @@ class InvestmentContoller {
     QuerySnapshot<Map<String, dynamic>> data =
         await FirebaseFirestore.instance.collection("investment_plans").get();
     for (QueryDocumentSnapshot<Map<String, dynamic>> document in data.docs) {
-      lists.add(document.data()!);
+      lists.add(document.data());
     }
     return lists;
   }

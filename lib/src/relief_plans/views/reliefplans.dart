@@ -1,4 +1,3 @@
-
 import 'package:coincontrol/imports.dart';
 
 class ReliefPlans extends StatefulWidget {
@@ -13,7 +12,6 @@ class _ReliefPlansState extends State<ReliefPlans> {
   void initState() {
     ReliefPlansControllers().fetchingAllReliefPlans();
     ReliefPlansControllers().fetchingAppliedReliefs();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -26,7 +24,13 @@ class _ReliefPlansState extends State<ReliefPlans> {
         appBar: AppBar(
           leading: InkWell(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        Dashboard(uid: FirebaseAuth.instance.currentUser?.uid),
+                  ),
+                );
               },
               child: const Icon(
                 Icons.arrow_back,
@@ -138,7 +142,7 @@ class _ReliefPlansState extends State<ReliefPlans> {
                                                     ),
                                                   ),
                                                 ),
-                                                Container(
+                                                SizedBox(
                                                   width:
                                                       getWidth(context) * 0.4,
                                                   child: Text(
@@ -237,7 +241,7 @@ class _ReliefPlansState extends State<ReliefPlans> {
                                               ),
                                             ),
                                           ),
-                                          Container(
+                                          SizedBox(
                                             width: getWidth(context) * 0.4,
                                             child: Text(
                                               data[index]['description'],

@@ -74,12 +74,12 @@ class _SignUp_newState extends State<SignUp_new> {
     await FirebaseFirestore.instance.collection('userCredentials').add(payload);
   }
 
-  bool _isNotValidate = false;
+  final bool _isNotValidate = false;
 
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<ApplicationBloc>(context);
-    bool _value = false;
+    
 
     return Scaffold(
       // backgroundColor: LIGHT_PRI_COLOR,

@@ -10,7 +10,6 @@ class SettingsController {
     if (userData.docs.isNotEmpty) {
       return userData.docs.first.data();
     } else {
-      print("No document found for user ID: $FirebaseAuth.instance.currentUser!.uid");
       return {};
     }
   }
@@ -34,7 +33,6 @@ class SettingsController {
     if (userData.docs.isNotEmpty) {
       return userData.docs.first.data();
     } else {
-      print("No document found for user ID: $FirebaseAuth.instance.currentUser!.uid");
       return {};
     }
   }
@@ -58,7 +56,6 @@ class SettingsController {
     if (userData.docs.isNotEmpty) {
       return userData.docs.first.data();
     } else {
-      print("No document found for user ID: $FirebaseAuth.instance.currentUser!.uid");
       return {};
     }
   }

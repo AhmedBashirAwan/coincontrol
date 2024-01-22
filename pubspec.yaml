@@ -48,11 +48,13 @@ dependencies:
   fluttertoast: ^8.2.2
   localization: ^2.1.1
   intl: any
+  permission_handler: ^11.0.1
   flutter_localization: ^0.1.14
   flutter_gen: ^5.3.2
   firebase_analytics: ^10.7.4
   image_picker: ^1.0.4
-
+  easy_autocomplete: ^1.6.0
+  firebase_database: ^10.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
