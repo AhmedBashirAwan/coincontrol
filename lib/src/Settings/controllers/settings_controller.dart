@@ -69,6 +69,4 @@ class SettingsController {
     QueryDocumentSnapshot<Map<String, dynamic>> document = data.docs.first;
     document.reference.update(payload);
   }
-
-  
 }

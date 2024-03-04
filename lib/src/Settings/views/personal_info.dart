@@ -418,13 +418,25 @@ class _EditPersonalState extends State<EditPersonal> {
                         onPressed: () async {
                           Map<String, dynamic> payload = {
                             'user_ID': FirebaseAuth.instance.currentUser!.uid,
-                            'job': _job,
-                            'income': _income,
-                            'savings': _savings,
-                            'condition': dropdownValue,
-                            'debts': _debts,
-                            'other_Income': _others,
-                            'investment_Returns': _returns,
+                            'job': _job.text.isEmpty
+                                ? data['job']
+                                : _job.text.trim(),
+                            'income': _income.text.isEmpty
+                                ? data['income']
+                                : _income.text.trim(),
+                            'savings': _savings.text.isEmpty
+                                ? data['savings']
+                                : _savings.text.trim(),
+                            'condition': dropdownValue.toString(),
+                            'debts': _debts.text.isEmpty
+                                ? data['debts']
+                                : _debts.text.trim(),
+                            'other_Income': _others.text.isEmpty
+                                ? data['other_Income']
+                                : _others.text.trim(),
+                            'investment_Returns': _returns.text.isEmpty
+                                ? data['investment_Returns']
+                                : _returns.text.trim(),
                           };
                           SettingsController().editingPersonalInfo(payload);
                         },

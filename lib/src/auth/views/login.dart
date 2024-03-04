@@ -9,8 +9,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isNotValidate = false;
- final TextEditingController _email = TextEditingController();
- final TextEditingController _pass = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _pass = TextEditingController();
   bool obscure = true;
 
   @override
@@ -29,7 +29,11 @@ class _LoginState extends State<Login> {
                   shrinkWrap: true,
                   children: [
                     SizedBox(
+                      height: getHeight(context) * 0.1,
+                    ),
+                    SizedBox(
                         height: getHeight(context) * 0.15,
+                        //logo Iamge
                         child: Image.asset("lib/assets/logo.png")),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -198,106 +202,106 @@ class _LoginState extends State<Login> {
                                 );
                               }
                             })),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(children: <Widget>[
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Divider(
-                              color: LIGHT_SEC_COLOR,
-                              thickness: 0.5,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "OR",
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: LIGHT_SEC_COLOR,
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Divider(
-                              color: LIGHT_SEC_COLOR,
-                              thickness: 0.5,
-                            ),
-                          ),
-                        ),
-                      ]),
-                    ),
-                    Links(
-                      onTap: () {
-                        Future<UserCredential?> signInWithGoogle() async {
-                          try {
-                            // Trigger the authentication flow
-                            final GoogleSignInAccount? googleUser =
-                                await GoogleSignIn().signIn();
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(vertical: 10),
+                    //   child: Row(children: <Widget>[
+                    //     Expanded(
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.all(8.0),
+                    //         child: Divider(
+                    //           color: LIGHT_SEC_COLOR,
+                    //           thickness: 0.5,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     Text(
+                    //       "OR",
+                    //       style: TextStyle(
+                    //         fontSize: 10,
+                    //         color: LIGHT_SEC_COLOR,
+                    //       ),
+                    //     ),
+                    //     Expanded(
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.all(8.0),
+                    //         child: Divider(
+                    //           color: LIGHT_SEC_COLOR,
+                    //           thickness: 0.5,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ]),
+                    // ),
+                    // Links(
+                    //   onTap: () {
+                    //     Future<UserCredential?> signInWithGoogle() async {
+                    //       try {
+                    //         // Trigger the authentication flow
+                    //         final GoogleSignInAccount? googleUser =
+                    //             await GoogleSignIn().signIn();
 
-                            // Obtain the auth details from the request
-                            final GoogleSignInAuthentication? googleAuth =
-                                await googleUser?.authentication;
+                    // Obtain the auth details from the request
+                    //         final GoogleSignInAuthentication? googleAuth =
+                    //             await googleUser?.authentication;
 
-                            // Create a new credential
-                            final credential = GoogleAuthProvider.credential(
-                              accessToken: googleAuth?.accessToken,
-                              idToken: googleAuth?.idToken,
-                            );
+                    // Create a new credential
+                    //         final credential = GoogleAuthProvider.credential(
+                    //           accessToken: googleAuth?.accessToken,
+                    //           idToken: googleAuth?.idToken,
+                    //         );
 
-                            // Once signed in, return the UserCredential
-                            UserCredential credentialss = await FirebaseAuth
-                                .instance
-                                .signInWithCredential(credential);
+                    //         // Once signed in, return the UserCredential
+                    //         UserCredential credentialss = await FirebaseAuth
+                    //             .instance
+                    //             .signInWithCredential(credential);
 
-                            // Query Firestore to check if the user is new
-                            QuerySnapshot<Map<String, dynamic>> data =
-                                await FirebaseFirestore.instance
-                                    .collection('userCredentials')
-                                    .where('user_ID',
-                                        isEqualTo: credentialss.user!.uid)
-                                    .get();
-                            if (data.docs.first.data()['new_User'] == true) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => InformationForms(
-                                    uid: credentialss.user!.uid,
-                                  ),
-                                ),
-                              );
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Dashboard(
-                                    uid: credentialss.user!.uid,
-                                  ),
-                                ),
-                              );
-                            }
-                            return credentialss; // Return the UserCredential here if needed
-                          } catch (e) {
-                            print('Error signing in with Google: $e');
-                            // Handle the error as needed
-                            return null; // Return null or throw an exception, depending on your error handling strategy
-                          }
-                        }
-                      },
-                      height: getHeight(context) * 0.06,
-                      radius: 18,
-                      image: CircleAvatar(
-                          radius: getHeight(context) * 0.018,
-                          child: Image.asset("lib/assets/google.png")),
-                      backgroundColor: isDarkTheme(context) == true
-                          ? Colors.grey.shade800
-                          : const Color(0xFFCBBCB1),
-                      foregroundColor: isDarkTheme(context) == true
-                          ? Colors.white
-                          : Colors.black,
-                      text: 'Signin with google',
-                    ),
+                    //         // Query Firestore to check if the user is new
+                    //         QuerySnapshot<Map<String, dynamic>> data =
+                    //             await FirebaseFirestore.instance
+                    //                 .collection('userCredentials')
+                    //                 .where('user_ID',
+                    //                     isEqualTo: credentialss.user!.uid)
+                    //                 .get();
+                    //         if (data.docs.first.data()['new_User'] == true) {
+                    //           Navigator.push(
+                    //             context,
+                    //             MaterialPageRoute(
+                    //               builder: (context) => InformationForms(
+                    //                 uid: credentialss.user!.uid,
+                    //               ),
+                    //             ),
+                    //           );
+                    //         } else {
+                    //           Navigator.push(
+                    //             context,
+                    //             MaterialPageRoute(
+                    //               builder: (context) => Dashboard(
+                    //                 uid: credentialss.user!.uid,
+                    //               ),
+                    //             ),
+                    //           );
+                    //         }
+                    //         return credentialss; // Return the UserCredential here if needed
+                    //       } catch (e) {
+                    //         print('Error signing in with Google: $e');
+                    //         // Handle the error as needed
+                    //         return null; // Return null or throw an exception, depending on your error handling strategy
+                    //       }
+                    //     }
+                    //   },
+                    //   height: getHeight(context) * 0.06,
+                    //   radius: 18,
+                    //   image: CircleAvatar(
+                    //       radius: getHeight(context) * 0.018,
+                    //       child: Image.asset("lib/assets/google.png")),
+                    //   backgroundColor: isDarkTheme(context) == true
+                    //       ? Colors.grey.shade800
+                    //       : const Color(0xFFCBBCB1),
+                    //   foregroundColor: isDarkTheme(context) == true
+                    //       ? Colors.white
+                    //       : Colors.black,
+                    //   text: 'Signin with google',
+                    // ),
                   ],
                 ),
               ),

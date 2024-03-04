@@ -10,16 +10,16 @@ class Expense extends StatefulWidget {
 
 class _ExpenseState extends State<Expense> {
   final TextEditingController _rent = TextEditingController();
-  bool rentRead = true;
   final TextEditingController _bills = TextEditingController();
-  bool billRead = true;
   final TextEditingController _transport = TextEditingController();
-  bool transportRead = true;
   final TextEditingController _grocieries = TextEditingController();
-  bool groceRead = true;
   final TextEditingController _education = TextEditingController();
-  bool educationRead = true;
   final TextEditingController _others = TextEditingController();
+  bool billRead = true;
+  bool transportRead = true;
+  bool rentRead = true;
+  bool groceRead = true;
+  bool educationRead = true;
   bool othersRead = true;
   @override
   Widget build(BuildContext context) {
@@ -311,7 +311,7 @@ class _ExpenseState extends State<Expense> {
                       //   height: 10,
                       // ),
                       const Row(
-                        children:  [
+                        children: [
                           Text(
                             "Others ",
                             style: TextStyle(
@@ -365,16 +365,28 @@ class _ExpenseState extends State<Expense> {
                             style: TextStyle(fontSize: 18),
                           ),
                           onPressed: () async {
-                            Map<String, dynamic> data = {
+                            Map<String, dynamic> payload = {
                               'user_ID': FirebaseAuth.instance.currentUser!.uid,
-                              'rent': _rent,
-                              'transportation': _transport,
-                              'bills': _bills,
-                              'groceries': _grocieries,
-                              'education': _education,
-                              'others': _others,
+                              'rent': _rent.text.isEmpty
+                                  ? data['rent']
+                                  : _rent.text.trim(),
+                              'transportation': _transport.text.isEmpty
+                                  ? data['transportation']
+                                  : _transport.text.trim(),
+                              'bills': _bills.text.isEmpty
+                                  ? data['bills']
+                                  : _bills.text.trim(),
+                              'groceries': _grocieries.text.isEmpty
+                                  ? data['groceries']
+                                  : _grocieries.text.trim(),
+                              'education': _education.text.isEmpty
+                                  ? data['education']
+                                  : _education.text.trim(),
+                              'others': _others.text.isEmpty
+                                  ? data['others']
+                                  : _others.text.trim(),
                             };
-                            SettingsController().editingPersonalInfo(data);
+                            SettingsController().editingFinancialInfo(payload);
                           },
                         ),
                       )

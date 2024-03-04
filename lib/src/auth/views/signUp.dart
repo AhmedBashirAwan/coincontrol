@@ -79,7 +79,6 @@ class _SignUp_newState extends State<SignUp_new> {
   @override
   Widget build(BuildContext context) {
     final appBloc = Provider.of<ApplicationBloc>(context);
-    
 
     return Scaffold(
       // backgroundColor: LIGHT_PRI_COLOR,
@@ -265,10 +264,12 @@ class _SignUp_newState extends State<SignUp_new> {
                                   );
                                 } else {
                                   try {
-                                    UserCredential credential = await FirebaseAuth.instance
-                                        .createUserWithEmailAndPassword(
-                                            email: _email.text.trim(),
-                                            password: _password.text.trim());
+                                    UserCredential credential =
+                                        await FirebaseAuth.instance
+                                            .createUserWithEmailAndPassword(
+                                                email: _email.text.trim(),
+                                                password:
+                                                    _password.text.trim());
                                     if (credential != null) {
                                       addUserDetails(
                                         email: _email.text.trim(),
@@ -336,53 +337,54 @@ class _SignUp_newState extends State<SignUp_new> {
                               },
                             )),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Row(children: <Widget>[
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Divider(
-                                color: LIGHT_SEC_COLOR,
-                                thickness: 0.5,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            "OR",
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: LIGHT_SEC_COLOR,
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Divider(
-                                color: LIGHT_SEC_COLOR,
-                                thickness: 0.5,
-                              ),
-                            ),
-                          ),
-                        ]),
-                      ),
-                      Links(
-                        onTap: () {
-                          Authcontroller().googleAuth();
-                        },
-                        height: getHeight(context) * 0.06,
-                        radius: 18,
-                        image: CircleAvatar(
-                            radius: getHeight(context) * 0.018,
-                            child: Image.asset("lib/assets/google.png")),
-                        backgroundColor: isDarkTheme(context) == true
-                            ? Colors.grey.shade800
-                            : const Color(0xFFCBBCB1),
-                        foregroundColor: isDarkTheme(context) == true
-                            ? Colors.white
-                            : Colors.black,
-                        text: 'Continue with google',
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(vertical: 10),
+                      //   child: Row(children: <Widget>[
+                      //     Expanded(
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.all(8.0),
+                      //         child: Divider(
+                      //           color: LIGHT_SEC_COLOR,
+                      //           thickness: 0.5,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     Text(
+                      //       "OR",
+                      //       style: TextStyle(
+                      //         fontSize: 10,
+                      //         color: LIGHT_SEC_COLOR,
+                      //       ),
+                      //     ),
+                      //     Expanded(
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.all(8.0),
+                      //         child: Divider(
+                      //           color: LIGHT_SEC_COLOR,
+                      //           thickness: 0.5,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ]),
+                      // ),
+                      // Links(
+                      //   onTap: () {
+                      //     Authcontroller().googleAuth();
+                      //   },
+                      //   height: getHeight(context) * 0.06,
+                      //   radius: 18,
+                      //   image: CircleAvatar(
+                      //       radius: getHeight(context) * 0.018,
+                      //       child: Image.asset("lib/assets/google.png")),
+                      //   backgroundColor: isDarkTheme(context) == true
+                      //       ? Colors.grey.shade800
+                      //       : const Color(0xFFCBBCB1),
+                      //   foregroundColor: isDarkTheme(context) == true
+                      //       ? Colors.white
+                      //       : Colors.black,
+                      //   text: 'Continue with google',
+                      // ),
+
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Row(

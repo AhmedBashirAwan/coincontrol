@@ -1,7 +1,8 @@
 import 'package:coincontrol/imports.dart';
 import 'package:coincontrol/src/customer_support/views/customer_support.dart';
 
-import '../components/budgetcreationpopup.dart';
+import '../../../components/budgetcreationpopup.dart';
+import '../../../components/drawer.dart';
 
 class Dashboard extends StatefulWidget {
  final String? uid;

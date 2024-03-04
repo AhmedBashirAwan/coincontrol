@@ -1,8 +1,7 @@
 import 'package:coincontrol/imports.dart';
 
 void main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -19,22 +18,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlutterNativeSplash.remove();
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: Provider.of<ApplicationBloc>(context).getTheme(),
-      home: FutureBuilder<void>(
-        builder: (context, snapshot) {
-          // if (FirebaseAuth.instance.currentUser != null) {
-          //   return Dashboard(
-          //     uid: FirebaseAuth.instance.currentUser!.uid,
-          //   );
-          // } else {
-          return const Login();
-          // }
-        },
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: Provider.of<ApplicationBloc>(context).getTheme(),
+        home:
+            // FutureBuilder<void>(
+            // builder: (context, snapshot) {
+            // if (FirebaseAuth.instance.currentUser != null) {
+            //   return Dashboard(
+            //     uid: FirebaseAuth.instance.currentUser!.uid,
+            //   );
+            // } else {
+            // return
+            const Login()
+        // }
+        // },
+        // ),
+        );
   }
 }

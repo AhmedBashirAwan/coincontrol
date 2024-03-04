@@ -1,5 +1,6 @@
 import 'package:coincontrol/imports.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PlansDetails extends StatefulWidget {
   int index;
@@ -13,6 +14,16 @@ class PlansDetails extends StatefulWidget {
 }
 
 class _PlansDetailsState extends State<PlansDetails> {
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+
+    // if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    // } else {
+    //   throw 'Could not launch $url';
+    // }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +52,7 @@ class _PlansDetailsState extends State<PlansDetails> {
                         )),
                     CupertinoDialogAction(
                         onPressed: () {
-                          Navigator.pop(context);
+                          // Navigator.pop(context);
                           Map<String, dynamic> pla = {
                             'user_ID': FirebaseAuth.instance.currentUser!.uid,
                             'imageURL': widget.plan['imageURL'],
@@ -84,59 +95,67 @@ class _PlansDetailsState extends State<PlansDetails> {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            SizedBox(
-              // color: Colors.amber,
-              height: getHeight(context) * 0.3,
-              child: Image.network(widget.plan['imageURL']),
-            ),
-            Row(
-              children: [
-                Text(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                // color: Colors.amber,
+                height: getHeight(context) * 0.3,
+                child: Image.network(widget.plan['imageURL']),
+              ),
+              SizedBox(
+                child: Text(
                   widget.plan['title'],
-                  style: const TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.w500),
+                  style:
+                      const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
                 ),
-              ],
-            ),
-            RichText(
-              text: TextSpan(
-                  text: widget.plan['description'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: isDarkTheme(context) == true
-                          ? Colors.white
-                          : Colors.black)),
-            ),
-            Row(
-              children: [
-                Text(
-                  widget.plan['link'],
-                  style: const TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            // Row(
-            //   children: [
-            //     SizedBox(
-            //       width: getWidth(context) * 0.3,
-            //       child: CustomElevatedBtn(
-            //         height: getHeight(context) * 0.03,
-            //         // radius: 18,
-            //         foregroundColor: LIGHT_COLOR,
-            //         backgroundColor: LIGHT_SEC_COLOR,
-            //         child: const Text(
-            //           'Applied',
-            //           style: TextStyle(fontSize: 18),
-            //         ),
-            //         onPressed: () async {},
-            //       ),
-            //     ),
-            //   ],
-            // ),
-          ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              RichText(
+                textAlign: TextAlign.justify,
+                softWrap: true,
+                text: TextSpan(
+                    text: widget.plan['description'],
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: isDarkTheme(context) == true
+                            ? Colors.white
+                            : Colors.black)),
+              ),
+              // Text(
+              //   widget.plan['link'],
+              //   style: const TextStyle(
+              //       fontSize: 16, fontWeight: FontWeight.w300),
+              // ),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: getWidth(context) * 0.5,
+                    child: CustomElevatedBtn(
+                      height: getHeight(context) * 0.03,
+                      radius: 18,
+                      foregroundColor: LIGHT_COLOR,
+                      backgroundColor: LIGHT_SEC_COLOR,
+                      child: const Text(
+                        'Apply Now',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () async {
+                        _launchURL(widget.plan['link']);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       )),
     );
