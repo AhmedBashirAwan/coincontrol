@@ -45,7 +45,7 @@ class _MainSettingsState extends State<MainSettings> {
             future: SettingsController().fetchingUsersCredentials(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child:  CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
@@ -74,8 +74,7 @@ class _MainSettingsState extends State<MainSettings> {
                               const Text(
                                 'Edit profile',
                                 style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400),
+                                    fontSize: 20, fontWeight: FontWeight.w400),
                               ),
                               const Spacer(),
                               InkWell(
@@ -103,8 +102,7 @@ class _MainSettingsState extends State<MainSettings> {
                               const Text(
                                 'Personal Information',
                                 style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400),
+                                    fontSize: 20, fontWeight: FontWeight.w400),
                               ),
                               const Spacer(),
                               InkWell(
@@ -145,8 +143,7 @@ class _MainSettingsState extends State<MainSettings> {
                               const Text(
                                 'Expenses',
                                 style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400),
+                                    fontSize: 20, fontWeight: FontWeight.w400),
                               ),
                               const Spacer(),
                               InkWell(
@@ -166,8 +163,7 @@ class _MainSettingsState extends State<MainSettings> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Expense(),
+                                          builder: (context) => const Expense(),
                                         ),
                                       );
                                     }
@@ -184,30 +180,31 @@ class _MainSettingsState extends State<MainSettings> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      children: [
-                        const Text(
-                          'Notifications',
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.w500),
-                        ),
-                        const Spacer(),
-                        Switch(
+                    // Row(
+                    //   children: [
+                    //     const Text(
+                    //       'Notifications',
+                    //       style: TextStyle(
+                    //           fontSize: 22, fontWeight: FontWeight.w500),
+                    //     ),
+                    //     const Spacer(),
+                    //     Switch(
 
-                          activeTrackColor: Colors.black,
-                          value: silent,
-                          onChanged: (value) {
-                            setState(() {
-                              if (silent == false) {
-                                silent = true;
-                              } else {
-                                silent = false;
-                              }
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                    //       activeTrackColor: Colors.black,
+                    //       value: silent,
+                    //       onChanged: (value) {
+                    //         setState(() {
+                    //           if (silent == false) {
+                    //             silent = true;
+                    //           } else {
+                    //             silent = false;
+                    //           }
+                    //         });
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

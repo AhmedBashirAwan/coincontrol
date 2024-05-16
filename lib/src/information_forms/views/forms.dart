@@ -183,7 +183,7 @@ class InformationStateForms extends State<InformationForms> {
             child: Container(
               color:
                   isDarkTheme(context) == true ? Colors.black : LIGHT_PRI_COLOR,
-              height: getHeight(context) * 0.6,
+              height: getHeight(context) * 0.65,
               child: Padding(
                 padding: const EdgeInsets.all(25),
                 child: Column(
@@ -202,7 +202,7 @@ class InformationStateForms extends State<InformationForms> {
                       height: 5,
                     ),
                     Container(
-                      height: getHeight(context) * 0.064,
+                      height: getHeight(context) * 0.076,
                       // width: getwidth(context),
                       decoration: BoxDecoration(
                           border: Border.all(

@@ -5,8 +5,8 @@ import '../../../components/budgetcreationpopup.dart';
 import '../../../components/drawer.dart';
 
 class Dashboard extends StatefulWidget {
- final String? uid;
- const Dashboard({super.key, required this.uid});
+  final String? uid;
+  const Dashboard({super.key, required this.uid});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -45,8 +45,7 @@ class _DashboardState extends State<Dashboard> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const CustomerSupport()
-                      ),
+                          builder: (context) => const CustomerSupport()),
                     );
                   },
                   child: Container(
@@ -120,7 +119,8 @@ class _DashboardState extends State<Dashboard> {
                                 Text(
                                   credentials['name'] ?? 'N/A',
                                   style: const TextStyle(
-                                      fontSize: 28, fontWeight: FontWeight.w500),
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.w500),
                                 ),
                                 Flexible(
                                   child: Text(
@@ -228,7 +228,7 @@ class _DashboardState extends State<Dashboard> {
                         height: getHeight(context) * 0.2,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Colors.white
+                            color: Colors.black45
                             // color: LIGHT_CARDS
                             ),
                         child: Image.asset("lib/assets/Investment.png"),
@@ -251,7 +251,7 @@ class _DashboardState extends State<Dashboard> {
                         height: getHeight(context) * 0.2,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Colors.white
+                            color: Colors.black45
                             // color: LIGHT_CARDS
                             ),
                         child: FittedBox(
@@ -269,16 +269,16 @@ class _DashboardState extends State<Dashboard> {
                     children: [
                       const Text(
                         "Investmnet Plans",
-                        style:
-                            TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
                       ),
                       SizedBox(
                         width: getWidth(context) * 0.2,
                       ),
                       const Text(
                         "Relief Plans",
-                        style:
-                            TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
                       )
                     ],
                   ),

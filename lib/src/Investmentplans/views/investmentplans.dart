@@ -1,6 +1,7 @@
 import 'package:coincontrol/imports.dart';
 import 'package:coincontrol/src/Investmentplans/controllers/investment_controllers.dart';
 import 'package:coincontrol/src/Investmentplans/views/investments_details.dart';
+import 'package:flutter/material.dart';
 
 class InvestmentPlans extends StatefulWidget {
   const InvestmentPlans({super.key});
@@ -91,36 +92,40 @@ class _InvestmentPlansState extends State<InvestmentPlans> {
                                             ? FittedBox(
                                                 child: Image.network(imageUrl),
                                               )
-                                            : Center(child: Text('No Image')),
+                                            : const Center(
+                                                child: Text('No Image')),
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(height: 5),
-                                        Text(
-                                          snapshot.data![index]['title'] ?? '',
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: getWidth(context) * 0.1,
-                                          child: Text(
-                                            snapshot.data![index]
-                                                    ['description'] ??
+                                    const SizedBox(width: 5),
+                                    SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 5),
+                                          Text(
+                                            snapshot.data![index]['title'] ??
                                                 '',
-                                            overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                          SizedBox(
+                                            width: getWidth(context) * 0.4,
+                                            child: Text(
+                                              snapshot.data![index]
+                                                      ['description'] ??
+                                                  '',
+                                              // overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
