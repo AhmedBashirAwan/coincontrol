@@ -47,8 +47,8 @@
 
 ### Project Structure
 
-coincontrol/
-├── lib/
+coincontrol/  
+├── lib/  
 │   ├── main.dart                       # Entry point of the application  
 │   ├── constants.dart                  # Global constants  
 │   ├── firebase_options.dart           # Firebase configuration  
